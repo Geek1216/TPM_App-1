@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,7 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
   bool _isjobCompleted = false;
   bool isScrap = false;
   bool isFirstTube = true;
+  bool isSaveLoading = false;
   int qty = 0;
   int currentTube = 0;
   double odVal = 0;
@@ -67,9 +69,11 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
     api = APICall();
     data = json.decode(widget.pref.jobData);
     setState(() {
-      if (int.parse(data['tubesMill']) == int.parse(data['formData']['quantity'])) {
+      if (int.parse(data['tubesMill']) ==
+          int.parse(data['formData']['quantity'])) {
         if (data['formData']['firstCoils'].length > 0) {
-          coils = coilsFromJson(json.encode(data['formData']['firstCoils'])) ?? [];
+          coils =
+              coilsFromJson(json.encode(data['formData']['firstCoils'])) ?? [];
           selCoil = coils.length > 0 ? coils[0] : '';
         } else
           coils = [];
@@ -207,148 +211,154 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
           child: Container(
 //              height: height,
               child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                height: 50,
+                width: width * .30,
+                child: RaisedButton(
+                  color: secondaryColor,
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushReplacementNamed(Routes.loginScreen);
+                  },
+                  child: Text('Log Out',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                ),
+              ),
+              SizedBox(
+                height: 50,
+                width: width * .30,
+                child: RaisedButton(
+                  color: secondaryColor,
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushReplacementNamed(Routes.partMfgInfo);
+                  },
+                  child: Text('Set-Up Sheet',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            width: width,
+            child: _cardWeldingInfo(),
+          ),
+          if (int.parse(data['tubesMill']) == qty)
+            SizedBox(
+              width: width * 0.95,
+              child: RaisedButton(
+                  onPressed: () async {
+                    //setting the material to material of inital setup
+                    await api.getData(widget.pref);
+                    data = json.decode(widget.pref.jobData);
+                    setState(() {
+                      if (data['formData']['firstCoils'].length > 0) {
+                        coils = coilsFromJson(
+                                json.encode(data['formData']['firstCoils'])) ??
+                            [];
+                        selCoil = coils.length > 0 ? coils[0] : '';
+                      } else
+                        coils = [];
+                      if (data['formData']['firstMesh'].length > 0) {
+                        meshs = meshsFromJson(
+                            json.encode(data['formData']['firstMesh']));
+                        selMeshTop = meshs[0];
+                        selMeshBot = meshs[1];
+                      } else {
+                        meshs = [];
+                      }
+                      if (data['formData']['firstMesh'].length > 0) {
+                        drainages = meshsFromJson(
+                            json.encode(data['formData']['firstMesh']));
+                        selDrainageTop = drainages[2];
+                        selDrainageBot = drainages[3];
+                      } else {
+                        drainages = [];
+                      }
+                    });
+                    widget.pref.isOrderStarted = true;
+
+                    setState(() {
+                      started = true;
+                    });
+                  },
+                  color: primaryColor,
+                  child: Text(
+                    'Start Order',
+                    style: bigFontStyle.copyWith(color: Colors.white),
+                  )),
+            ),
+          if (started ||
+              data['formData']['nextTubeMill'] != "" ||
+              data['formData']['nextTube'] != "")
+            SizedBox(width: width * 0.97, child: orderStartedInfoCard()),
+          SizedBox(
+            height: 10,
+          ),
+          if ((int.parse(data['tubesMill']) == 0) &&
+              (data['formData']['nextTubeMill'] == ""))
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        height: 50,
-                        width: width * .30,
-                        child: RaisedButton(
-                          color: secondaryColor,
-                          onPressed: () {
-                            Navigator.of(context).pushReplacementNamed(Routes.loginScreen);
-                          },
-                          child: Text('Log Out',
-                              style:
-                              TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 50,
-                        width: width * .30,
-                        child: RaisedButton(
-                          color: secondaryColor,
-                          onPressed: () {
-                            Navigator.of(context)
-                                .pushReplacementNamed(Routes.partMfgInfo);
-                          },
-                          child: Text('Set-Up Sheet',
-                              style:
-                              TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                        ),
-                      ),
-                    ],
+                  SizedBox(
+                    width: width * 0.5,
+                    child: Text('No Tubes Available',
+                        style: bigFontStyle.copyWith(color: Colors.black)),
                   ),
                   SizedBox(
-                    width: width,
-                    child: _cardWeldingInfo(),
-                  ),
-                  if (int.parse(data['tubesMill']) == qty)
-                    SizedBox(
-                      width: width * 0.95,
-                      child: RaisedButton(
-                          onPressed: () async {
-                            //setting the material to material of inital setup
-                            await api.getData(widget.pref);
-                            data = json.decode(widget.pref.jobData);
-                            setState(() {
-                              if (data['formData']['firstCoils'].length > 0) {
-                                coils = coilsFromJson(
-                                    json.encode(data['formData']['firstCoils'])) ?? [];
-                                selCoil = coils.length > 0 ? coils[0] : '';
-                              } else
-                                coils = [];
-                              if (data['formData']['firstMesh'].length > 0) {
-                                meshs = meshsFromJson(
-                                    json.encode(data['formData']['firstMesh']));
-                                selMeshTop = meshs[0];
-                                selMeshBot = meshs[1];
-                              } else {
-                                meshs = [];
-                              }
-                              if (data['formData']['firstMesh'].length > 0) {
-                                drainages = meshsFromJson(json.encode(data['formData']['firstMesh']));
-                                selDrainageTop = drainages[2];
-                                selDrainageBot = drainages[3];
-                              } else {
-                                drainages = [];
-                              }
-                            });
-                            widget.pref.isOrderStarted = true;
+                    height: 50,
+                    width: width * .49,
+                    child: RaisedButton(
+                      color: secondaryColor,
+                      onPressed: () async {
+                        //Update the api
+                        await api.getData(widget.pref);
 
-                            setState(() {
-                              started = true;
-                            });
-                          },
-                          color: primaryColor,
-                          child: Text(
-                            'Start Order',
-                            style: bigFontStyle.copyWith(color: Colors.white),
-                          )),
+                        setState(() {
+                          data = json.decode(widget.pref.jobData);
+                          if (data['formData']['nextTubeMill'] != "") {
+                            widget.pref.currentTubeNo =
+                                data['formData']['nextTubeMill'];
+                            widget.pref.currentTube = int.parse(
+                                widget.pref.currentTubeNo.substring(
+                                    widget.pref.currentTubeNo.indexOf('-') +
+                                        1));
+                          } else if (data['formData']['nextTube'] == "") {
+                            widget.pref.currentTube = 1;
+                            widget.pref.currentTubeNo =
+                                generateTubeNumber(widget.pref.currentTube);
+                          } else {
+                            widget.pref.currentTubeNo =
+                                data['formData']['nextTube'];
+                            widget.pref.currentTube = int.parse(
+                                widget.pref.currentTubeNo.substring(
+                                    widget.pref.currentTubeNo.indexOf('-') +
+                                        1));
+                          }
+                        });
+                      },
+                      child: Text('Refresh',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
                     ),
-                  if (started || data['formData']['nextTubeMill'] != "" || data['formData']['nextTube'] != "")
-                    SizedBox(width: width * 0.97, child: orderStartedInfoCard()),
-                  SizedBox(
-                    height: 10,
                   ),
-                  if ((int.parse(data['tubesMill']) == 0) &&
-                      (data['formData']['nextTubeMill'] == ""))
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: width * 0.5,
-                            child: Text('No Tubes Available',
-                                style: bigFontStyle.copyWith(color: Colors.black)),
-                          ),
-                          SizedBox(
-                            height: 50,
-                            width: width * .49,
-                            child: RaisedButton(
-                              color: secondaryColor,
-                              onPressed: () async {
-                                //Update the api
-                                await api.getData(widget.pref);
-
-                                setState(() {
-                                  data = json.decode(widget.pref.jobData);
-                                  if (data['formData']['nextTubeMill'] != "") {
-                                    widget.pref.currentTubeNo =
-                                    data['formData']['nextTubeMill'];
-                                    widget.pref.currentTube = int.parse(
-                                        widget.pref.currentTubeNo.substring(
-                                            widget.pref.currentTubeNo.indexOf('-') +
-                                                1));
-                                  } else if (data['formData']['nextTube'] == "") {
-                                    widget.pref.currentTube = 1;
-                                    widget.pref.currentTubeNo =
-                                        generateTubeNumber(widget.pref.currentTube);
-                                  } else {
-                                    widget.pref.currentTubeNo =
-                                    data['formData']['nextTube'];
-                                    widget.pref.currentTube = int.parse(
-                                        widget.pref.currentTubeNo.substring(
-                                            widget.pref.currentTubeNo.indexOf('-') +
-                                                1));
-                                  }
-                                });
-                              },
-                              child: Text('Refresh',
-                                  style: TextStyle(
-                                      fontSize: 20, fontWeight: FontWeight.bold)),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  if ((started && (int.parse(data['tubesMill']) != 0)) ||
-                      data['formData']['nextTubeMill'] != "" ||
-                      data['formData']['nextTube'] != "")
-                    tubeEditCard(widget.pref.currentTubeNo, data['formData']['isScrapTube']),
                 ],
-              ))),
+              ),
+            ),
+          if ((started && (int.parse(data['tubesMill']) != 0)) ||
+              data['formData']['nextTubeMill'] != "" ||
+              data['formData']['nextTube'] != "")
+            tubeEditCard(
+                widget.pref.currentTubeNo, data['formData']['isScrapTube']),
+        ],
+      ))),
     );
   }
 
@@ -492,7 +502,7 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                       SizedBox(
                         width: width * 0.90,
                         child: Text(
-                            'OD: ${data['formData']['od'] ?? "--"} +${data['formData']['odPos'] ?? "--"} -${data['formData']['odNeg'] ?? "--"}',
+                            '${data['formData']['isOd'] == '1' ? 'OD' : 'ID'}:  ${data['formData']['od'] ?? "--"} +${data['formData']['odPos'] ?? "--"} -${data['formData']['odNeg'] ?? "--"}',
                             style: bigBoldFontStyle.copyWith(fontSize: 22)),
                       ),
                     ],
@@ -555,101 +565,106 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Expanded(child:
-                        SizedBox(
-                          width: width * 0.45,
-                          child: Text(
-                            '$curTubeNo',
-                            style: TextStyle(
-                              backgroundColor: isScrappedTube ? Colors.yellow : Colors.transparent,
+                      Expanded(
+                          child: SizedBox(
+                        width: width * 0.45,
+                        child: Text(
+                          '$curTubeNo',
+                          style: TextStyle(
+                              backgroundColor: isScrappedTube
+                                  ? Colors.yellow
+                                  : Colors.transparent,
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black
-                            ),
-                          ),
-                        )
-                      ),
-                      Expanded(child:
-                        SizedBox(
-                          height: 50,
-                          width: width * 0.45,
-                          child: ElevatedButton(
-                            style: ButtonStyle( backgroundColor: MaterialStateProperty.all(Colors.blue) ),
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: Text('Confirm'),
-                                    content: Container(
-                                      height: 220,
-                                      width: 300,
-                                      child: Column(
-                                        children: [
-                                          Expanded(child:
-                                            SizedBox(
-                                              height: 100,
-                                              width: 200,
-                                              child: TextField(
-                                                keyboardType: TextInputType.number,
-                                                controller: _scrapLength,
-                                                maxLines: 1,
-                                                decoration: InputDecoration(
-                                                    labelText: "Scrap Length"),
-                                              ),
-                                            )
+                              color: Colors.black),
+                        ),
+                      )),
+                      Expanded(
+                          child: SizedBox(
+                        height: 50,
+                        width: width * 0.45,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.blue)),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text('Confirm'),
+                                  content: Container(
+                                    height: 220,
+                                    width: 300,
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                            child: SizedBox(
+                                          height: 100,
+                                          width: 200,
+                                          child: TextField(
+                                            keyboardType: TextInputType.number,
+                                            controller: _scrapLength,
+                                            maxLines: 1,
+                                            decoration: InputDecoration(
+                                                labelText: "Scrap Length"),
                                           ),
-                                          Expanded(child:
-                                            SizedBox(
-                                              height: 100,
-                                              width: 200,
-                                              child: TextField(
-                                                controller: _reason,
-                                                maxLines: 3,
-                                                decoration: InputDecoration(
-                                                    labelText: "Reason for scrap"),
-                                              ),
-                                            )
-                                          )
-                                        ],
-                                      ),
+                                        )),
+                                        Expanded(
+                                            child: SizedBox(
+                                          height: 100,
+                                          width: 200,
+                                          child: TextField(
+                                            controller: _reason,
+                                            maxLines: 3,
+                                            decoration: InputDecoration(
+                                                labelText: "Reason for scrap"),
+                                          ),
+                                        ))
+                                      ],
                                     ),
-                                    actions: [
-                                      ElevatedButton(
-                                        onPressed: () async {
-                                          await api.postScarp(
-                                              widget.pref,
-                                              _reason.text ?? "",
-                                              selCoil.coilNo ?? "",
-                                              _scrapLength.text ?? "",
-                                              "M");
-                                          clearForm();
+                                  ),
+                                  actions: [
+                                    ElevatedButton(
+                                      onPressed: () async {
+                                        await api.postScarp(
+                                            widget.pref,
+                                            _reason.text ?? "",
+                                            selCoil.coilNo ?? "",
+                                            _scrapLength.text ?? "",
+                                            "M");
+                                        clearForm();
 
-                                          Navigator.of(context).pop();
-                                        },
-                                        // color: Colors.green,
-                                        style: ButtonStyle( backgroundColor: MaterialStateProperty.all(Colors.green) ),
-                                        child: Text('Scrap'),
-                                      ),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        // color: Colors.red,
-                                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
-                                        child: Text('No'),
-                                      )
-                                    ],
-                                  );
-                                },
-                              );
-                            },
-                            child: const Text('Scrap',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold)),
-                          ),
-                        )
-                      ),
+                                        Navigator.of(context).pop();
+                                      },
+                                      // color: Colors.green,
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.green)),
+                                      child: Text('Scrap'),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      // color: Colors.red,
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.red)),
+                                      child: Text('No'),
+                                    )
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: const Text('Scrap',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                        ),
+                      )),
                     ],
                   ),
                 ),
@@ -768,8 +783,11 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
 
                                     //update new material
                                     setState(() {
-                                      if (data['formData']['coils'].length > 0) {
-                                        coils = coilsFromJson(json.encode(data['formData']['coils'])) ?? [];
+                                      if (data['formData']['coils'].length >
+                                          0) {
+                                        coils = coilsFromJson(json.encode(
+                                                data['formData']['coils'])) ??
+                                            [];
                                         selCoil = coils[0];
                                       } else {
                                         coils = [];
@@ -791,19 +809,28 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                                 SizedBox(
                                                   width: width * 0.9,
                                                   child:
-                                                  DropdownButtonFormField(
+                                                      DropdownButtonFormField(
                                                     isExpanded: true,
                                                     value: selCoil,
                                                     onChanged: (v) {
                                                       selCoil = v;
                                                     },
-                                                    items: coils.map<DropdownMenuItem<Coils>>((Coils value) {
-                                                          return DropdownMenuItem<Coils>(
-                                                            value: value,
-                                                            child: Text( '${value.coilNo} ${value.gage}',
-                                                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                                                          );
-                                                        }).toList(),
+                                                    items: coils.map<
+                                                            DropdownMenuItem<
+                                                                Coils>>(
+                                                        (Coils value) {
+                                                      return DropdownMenuItem<
+                                                          Coils>(
+                                                        value: value,
+                                                        child: Text(
+                                                            '${value.coilNo} ${value.gage}',
+                                                            style: TextStyle(
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
+                                                      );
+                                                    }).toList(),
                                                   ),
                                                 ),
                                               ],
@@ -823,7 +850,10 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                     );
                                   },
                                   // style: Colors.green,
-                                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.green)),
                                   child: Text('Yes'),
                                 ),
                                 RaisedButton(
@@ -839,8 +869,10 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                         );
                       },
                       child: const Text('End Coil',
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white)
-                      ),
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)),
                     ),
                   ),
                 ),
@@ -883,7 +915,7 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                           Map<String, dynamic> material = {
                                             "materialData": {
                                               "filter_no":
-                                              selMeshTop.meshNo ?? ""
+                                                  selMeshTop.meshNo ?? ""
                                             }
                                           };
                                           await api.postMaterialData(material);
@@ -894,75 +926,106 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                           //update new material
                                           setState(() {
                                             if (data['formData']['mesh']
-                                                .length >
+                                                    .length >
                                                 0) {
                                               meshs = meshsFromJson(json.encode(
                                                   data['formData']['mesh']));
                                               // selMeshTop = meshs[0];
+                                              if (meshs.length > 0) {
+                                                showDialog(
+                                                  context: dialogContext,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: Text(
+                                                          'Select New Top Filter Mesh'),
+                                                      content: Container(
+                                                        height: 150,
+                                                        width: 500,
+                                                        child: Column(
+                                                          children: [
+                                                            SizedBox(
+                                                                height: 15),
+                                                            SizedBox(
+                                                              width:
+                                                                  width * 0.9,
+                                                              child:
+                                                                  DropdownButtonFormField(
+//                    decoration: InputDecoration(labelText: 'Filter Mesh'),
+                                                                isExpanded:
+                                                                    true,
+                                                                // value: meshs[0],
+                                                                onChanged: (v) {
+                                                                  selMeshTop =
+                                                                      v;
+                                                                      print(selMeshTop);
+                                                                },
+                                                                items: meshs.map<
+                                                                    DropdownMenuItem<
+                                                                        Meshs>>((Meshs
+                                                                    value) {
+                                                                  if (value.meshNo == selDrainageTop.meshNo ||
+                                                                      value.meshNo ==
+                                                                          selMeshBot
+                                                                              .meshNo ||
+                                                                      value.meshNo ==
+                                                                          selDrainageBot
+                                                                              .meshNo)
+                                                                    return DropdownMenuItem<
+                                                                        Meshs>(
+                                                                      value:
+                                                                          value,
+                                                                      child: Text(
+                                                                          '${value.meshNo} ${value.meshType}',
+                                                                          style: TextStyle(
+                                                                              fontSize: 20,
+                                                                              fontWeight: FontWeight.bold,
+                                                                              color: Colors.white)),
+                                                                    );
+                                                                  if (value.meshNo != selDrainageTop.meshNo &&
+                                                                      value.meshNo !=
+                                                                          selMeshBot
+                                                                              .meshNo &&
+                                                                      value.meshNo !=
+                                                                          selDrainageBot
+                                                                              .meshNo)
+                                                                    return DropdownMenuItem<
+                                                                        Meshs>(
+                                                                      value:
+                                                                          value,
+                                                                      child: Text(
+                                                                          '${value.meshNo} ${value.meshType}',
+                                                                          style: TextStyle(
+                                                                              fontSize: 20,
+                                                                              fontWeight: FontWeight.bold)),
+                                                                    );
+                                                                }).toList(),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      actions: [
+                                                        RaisedButton(
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                dialogContext);
+                                                            Navigator.pop(
+                                                                dialogContext);
+                                                          },
+                                                          color: Colors.green,
+                                                          child: Text('Select'),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              }
                                             } else {
                                               meshs = [];
                                             }
                                             isMeshTop = true;
                                           });
-                                          showDialog(
-                                            context: dialogContext,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: Text(
-                                                    'Select New Top Filter Mesh'),
-                                                content: Container(
-                                                  height: 150,
-                                                  width: 500,
-                                                  child: Column(
-                                                    children: [
-                                                      SizedBox(height: 15),
-                                                      SizedBox(
-                                                        width: width * 0.9,
-                                                        child:
-                                                        DropdownButtonFormField(
-//                    decoration: InputDecoration(labelText: 'Filter Mesh'),
-                                                          isExpanded: true,
-                                                          value: selMeshTop,
-                                                          onChanged: (v) {
-                                                            selMeshTop = v;
-                                                          },
-                                                          items: meshs.map<DropdownMenuItem<Meshs>>((Meshs value) {
-                                                            if (value.meshNo == selDrainageTop.meshNo ||
-                                                                value.meshNo == selMeshBot.meshNo ||
-                                                                value.meshNo == selDrainageBot.meshNo)
-                                                              return DropdownMenuItem<Meshs>(
-                                                                value: value,
-                                                                child: Text('${value.meshNo} ${value.meshType}', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white)),
-                                                              );
-                                                            if (value.meshNo != selDrainageTop.meshNo &&
-                                                                value.meshNo != selMeshBot.meshNo &&
-                                                                value.meshNo != selDrainageBot.meshNo)
-                                                              return DropdownMenuItem<Meshs>(
-                                                                value: value,
-                                                                child: Text('${value.meshNo} ${value.meshType}',
-                                                                    style: TextStyle(fontSize:20, fontWeight:FontWeight.bold)),
-                                                              );
-                                                          }).toList(),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                actions: [
-                                                  RaisedButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(
-                                                          dialogContext);
-                                                      Navigator.pop(
-                                                          dialogContext);
-                                                    },
-                                                    color: Colors.green,
-                                                    child: Text('Select'),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
                                         },
                                         color: Colors.green,
                                         child: Text('Yes'),
@@ -1018,7 +1081,7 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                           Map<String, dynamic> material = {
                                             "materialData": {
                                               "filter_no":
-                                              selMeshBot.meshNo ?? ""
+                                                  selMeshBot.meshNo ?? ""
                                             }
                                           };
                                           await api.postMaterialData(material);
@@ -1029,106 +1092,112 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                           //update new material
                                           setState(() {
                                             if (data['formData']['mesh']
-                                                .length >
+                                                    .length >
                                                 0) {
                                               meshs = meshsFromJson(json.encode(
                                                   data['formData']['mesh']));
                                               // selMeshBot = meshs[0];
+                                              if (meshs.length > 0) {
+                                                showDialog(
+                                                  context: dialogContext,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: Text(
+                                                          'Select New bottom Filter Mesh'),
+                                                      content: Container(
+                                                        height: 150,
+                                                        width: 500,
+                                                        child: Column(
+                                                          children: [
+                                                            SizedBox(
+                                                                height: 15),
+                                                            SizedBox(
+                                                              width:
+                                                                  width * 0.9,
+                                                              child:
+                                                                  DropdownButtonFormField(
+//                    decoration: InputDecoration(labelText: 'Filter Mesh'),
+                                                                isExpanded:
+                                                                    true,
+                                                                // value: selMeshBot.meshNo !=
+                                                                //         null
+                                                                //     ? selMeshBot
+                                                                //     : meshs[0],
+                                                                onChanged: (v) {
+                                                                  selMeshBot =
+                                                                      v;
+                                                                },
+                                                                items: meshs
+                                                                    .map<
+                                                                        // ignore: missing_return
+                                                                        DropdownMenuItem<
+                                                                            // ignore: missing_return
+                                                                            Meshs>>((Meshs
+                                                                        value) {
+                                                                  if (value.meshNo == selDrainageTop.meshNo ||
+                                                                      value.meshNo ==
+                                                                          selMeshTop
+                                                                              .meshNo ||
+                                                                      value.meshNo ==
+                                                                          selDrainageBot
+                                                                              .meshNo)
+                                                                    return DropdownMenuItem<
+                                                                        Meshs>(
+                                                                      value:
+                                                                          value,
+                                                                      child: Text(
+                                                                          '${value.meshNo} ${value.meshType}',
+                                                                          style: TextStyle(
+                                                                              fontSize: 20,
+                                                                              fontWeight: FontWeight.bold,
+                                                                              color: Colors.black)),
+                                                                    );
+                                                                  if (value.meshNo != selDrainageTop.meshNo &&
+                                                                      value.meshNo !=
+                                                                          selMeshTop
+                                                                              .meshNo &&
+                                                                      value.meshNo !=
+                                                                          selDrainageBot
+                                                                              .meshNo)
+                                                                    return DropdownMenuItem<
+                                                                        Meshs>(
+                                                                      value:
+                                                                          value,
+                                                                      child: Text(
+                                                                          '${value.meshNo} ${value.meshType}',
+                                                                          style: TextStyle(
+                                                                              fontSize: 20,
+                                                                              color: Colors.black,
+                                                                              fontWeight: FontWeight.bold)),
+                                                                    );
+                                                                }).toList(),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      actions: [
+                                                        RaisedButton(
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                dialogContext);
+                                                            Navigator.pop(
+                                                                dialogContext);
+                                                          },
+                                                          color: Colors.green,
+                                                          child: Text('Select'),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              }
                                             } else {
                                               meshs = [];
                                             }
                                             isMeshBot = true;
                                           });
-                                          showDialog(
-                                            context: dialogContext,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: Text(
-                                                    'Select New bottom Filter Mesh'),
-                                                content: Container(
-                                                  height: 150,
-                                                  width: 500,
-                                                  child: Column(
-                                                    children: [
-                                                      SizedBox(height: 15),
-                                                      SizedBox(
-                                                        width: width * 0.9,
-                                                        child:
-                                                        DropdownButtonFormField(
-//                    decoration: InputDecoration(labelText: 'Filter Mesh'),
-                                                          isExpanded: true,
-                                                          value: selMeshBot,
-                                                          onChanged: (v) {
-                                                            selMeshBot = v;
-                                                          },
-                                                          items: meshs.map<
-                                                              DropdownMenuItem<
-                                                                  Meshs>>((Meshs
-                                                          value) {
-                                                            if (value.meshNo ==
-                                                                selDrainageTop
-                                                                    .meshNo ||
-                                                                value.meshNo ==
-                                                                    selMeshTop
-                                                                        .meshNo ||
-                                                                value.meshNo ==
-                                                                    selDrainageBot
-                                                                        .meshNo)
-                                                              return DropdownMenuItem<
-                                                                  Meshs>(
-                                                                value: value,
-                                                                child: Text(
-                                                                    '${value.meshNo} ${value.meshType}',
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                        20,
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                        color: Colors
-                                                                            .white)),
-                                                              );
-                                                            if (value.meshNo !=
-                                                                selDrainageTop
-                                                                    .meshNo &&
-                                                                value.meshNo !=
-                                                                    selMeshTop
-                                                                        .meshNo &&
-                                                                value.meshNo !=
-                                                                    selDrainageBot
-                                                                        .meshNo)
-                                                              return DropdownMenuItem<
-                                                                  Meshs>(
-                                                                value: value,
-                                                                child: Text(
-                                                                    '${value.meshNo} ${value.meshType}',
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                        20,
-                                                                        fontWeight:
-                                                                        FontWeight.bold)),
-                                                              );
-                                                          }).toList(),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                actions: [
-                                                  RaisedButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(
-                                                          dialogContext);
-                                                      Navigator.pop(
-                                                          dialogContext);
-                                                    },
-                                                    color: Colors.green,
-                                                    child: Text('Select'),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
                                         },
                                         color: Colors.green,
                                         child: Text('Yes'),
@@ -1192,7 +1261,7 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                           Map<String, dynamic> material = {
                                             "materialData": {
                                               "drain_no":
-                                              selDrainageTop.meshNo ?? ""
+                                                  selDrainageTop.meshNo ?? ""
                                             }
                                           };
                                           await api.postMaterialData(material);
@@ -1203,108 +1272,109 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                           //update new material
                                           setState(() {
                                             if (data['formData']['mesh']
-                                                .length >
+                                                    .length >
                                                 0) {
                                               drainages = meshsFromJson(
                                                   json.encode(data['formData']
-                                                  ['mesh']));
+                                                      ['mesh']));
                                               // selDrainageTop = drainages[0];
+                                              if (drainages.length > 0) {
+                                                showDialog(
+                                                  context: dialogContext,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: Text(
+                                                          'Select New Top Drainage Mesh'),
+                                                      content: Container(
+                                                        height: 150,
+                                                        width: 500,
+                                                        child: Column(
+                                                          children: [
+                                                            SizedBox(
+                                                                height: 15),
+                                                            SizedBox(
+                                                              width:
+                                                                  width * 0.9,
+                                                              child:
+                                                                  DropdownButtonFormField(
+//                    decoration: InputDecoration(labelText: 'Drainage Mesh'),
+                                                                isExpanded:
+                                                                    true,
+                                                                // value:
+                                                                //     selDrainageTop ??
+                                                                //         drainages[
+                                                                //             0],
+                                                                onChanged: (v) {
+                                                                  selDrainageTop =
+                                                                      v;
+                                                                },
+                                                                items: drainages.map<
+                                                                    DropdownMenuItem<
+                                                                        Meshs>>((Meshs
+                                                                    value) {
+                                                                  if (value.meshNo == selDrainageBot.meshNo ||
+                                                                      value.meshNo ==
+                                                                          selMeshTop
+                                                                              .meshNo ||
+                                                                      value.meshNo ==
+                                                                          selMeshBot
+                                                                              .meshNo)
+                                                                    return DropdownMenuItem<
+                                                                        Meshs>(
+                                                                      value:
+                                                                          value,
+                                                                      child: Text(
+                                                                          '${value.meshNo} ${value.meshType}',
+                                                                          style: TextStyle(
+                                                                              fontSize: 20,
+                                                                              fontWeight: FontWeight.bold,
+                                                                              color: Colors.white)),
+                                                                    );
+                                                                  if (value.meshNo != selDrainageBot.meshNo &&
+                                                                      value.meshNo !=
+                                                                          selMeshTop
+                                                                              .meshNo &&
+                                                                      value.meshNo !=
+                                                                          selMeshBot
+                                                                              .meshNo)
+                                                                    return DropdownMenuItem<
+                                                                        Meshs>(
+                                                                      value:
+                                                                          value,
+                                                                      child: Text(
+                                                                          '${value.meshNo} ${value.meshType}',
+                                                                          style: TextStyle(
+                                                                              fontSize: 20,
+                                                                              fontWeight: FontWeight.bold)),
+                                                                    );
+                                                                }).toList(),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      actions: [
+                                                        RaisedButton(
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                dialogContext);
+                                                            Navigator.pop(
+                                                                dialogContext);
+                                                          },
+                                                          color: Colors.green,
+                                                          child: Text('Select'),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              }
                                             } else {
                                               drainages = [];
                                             }
                                             isDrainageTop = true;
                                           });
-
-                                          showDialog(
-                                            context: dialogContext,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: Text(
-                                                    'Select New Top Drainage Mesh'),
-                                                content: Container(
-                                                  height: 150,
-                                                  width: 500,
-                                                  child: Column(
-                                                    children: [
-                                                      SizedBox(height: 15),
-                                                      SizedBox(
-                                                        width: width * 0.9,
-                                                        child:
-                                                        DropdownButtonFormField(
-//                    decoration: InputDecoration(labelText: 'Drainage Mesh'),
-                                                          isExpanded: true,
-                                                          value: selDrainageTop,
-                                                          onChanged: (v) {
-                                                            selDrainageTop = v;
-                                                          },
-                                                          items: drainages.map<
-                                                              DropdownMenuItem<
-                                                                  Meshs>>((Meshs
-                                                          value) {
-                                                            if (value.meshNo ==
-                                                                selDrainageBot
-                                                                    .meshNo ||
-                                                                value.meshNo ==
-                                                                    selMeshTop
-                                                                        .meshNo ||
-                                                                value.meshNo ==
-                                                                    selMeshBot
-                                                                        .meshNo)
-                                                              return DropdownMenuItem<
-                                                                  Meshs>(
-                                                                value: value,
-                                                                child: Text(
-                                                                    '${value.meshNo} ${value.meshType}',
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                        20,
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                        color: Colors
-                                                                            .white)),
-                                                              );
-                                                            if (value.meshNo !=
-                                                                selDrainageBot
-                                                                    .meshNo &&
-                                                                value.meshNo !=
-                                                                    selMeshTop
-                                                                        .meshNo &&
-                                                                value.meshNo !=
-                                                                    selMeshBot
-                                                                        .meshNo)
-                                                              return DropdownMenuItem<
-                                                                  Meshs>(
-                                                                value: value,
-                                                                child: Text(
-                                                                    '${value.meshNo} ${value.meshType}',
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                        20,
-                                                                        fontWeight:
-                                                                        FontWeight.bold)),
-                                                              );
-                                                          }).toList(),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                actions: [
-                                                  RaisedButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(
-                                                          dialogContext);
-                                                      Navigator.pop(
-                                                          dialogContext);
-                                                    },
-                                                    color: Colors.green,
-                                                    child: Text('Select'),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
                                         },
                                         color: Colors.green,
                                         child: Text('Yes'),
@@ -1362,7 +1432,7 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                           Map<String, dynamic> material = {
                                             "materialData": {
                                               "drain_no":
-                                              selDrainageBot.meshNo ?? ""
+                                                  selDrainageBot.meshNo ?? ""
                                             }
                                           };
                                           await api.postMaterialData(material);
@@ -1373,80 +1443,107 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                           //update new material
                                           setState(() {
                                             if (data['formData']['mesh']
-                                                .length >
+                                                    .length >
                                                 0) {
                                               drainages = meshsFromJson(
                                                   json.encode(data['formData']
-                                                  ['mesh']));
+                                                      ['mesh']));
                                               // selDrainageBot = drainages[0];
+                                              if (drainages.length > 0) {
+                                                showDialog(
+                                                  context: dialogContext,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: Text(
+                                                          'Select New Bottom Drainage Mesh'),
+                                                      content: Container(
+                                                        height: 150,
+                                                        width: 500,
+                                                        child: Column(
+                                                          children: [
+                                                            SizedBox(
+                                                                height: 15),
+                                                            SizedBox(
+                                                              width:
+                                                                  width * 0.9,
+                                                              child:
+                                                                  DropdownButtonFormField(
+//                    decoration: InputDecoration(labelText: 'Drainage Mesh'),
+                                                                isExpanded:
+                                                                    true,
+                                                                // value:
+                                                                //     selDrainageBot,
+                                                                onChanged: (v) {
+                                                                  selDrainageBot =
+                                                                      v;
+                                                                },
+                                                                items: drainages.map<
+                                                                    DropdownMenuItem<
+                                                                        Meshs>>((Meshs
+                                                                    value) {
+                                                                  if (value.meshNo == selDrainageTop.meshNo ||
+                                                                      value.meshNo ==
+                                                                          selMeshTop
+                                                                              .meshNo ||
+                                                                      value.meshNo ==
+                                                                          selMeshBot
+                                                                              .meshNo)
+                                                                    return DropdownMenuItem<
+                                                                        Meshs>(
+                                                                      value:
+                                                                          value,
+                                                                      child: Text(
+                                                                          '${value.meshNo} ${value.meshType}',
+                                                                          style: TextStyle(
+                                                                              fontSize: 20,
+                                                                              fontWeight: FontWeight.bold,
+                                                                              color: Colors.white)),
+                                                                    );
+                                                                  if (value.meshNo != selDrainageTop.meshNo &&
+                                                                      value.meshNo !=
+                                                                          selMeshTop
+                                                                              .meshNo &&
+                                                                      value.meshNo !=
+                                                                          selMeshBot
+                                                                              .meshNo)
+                                                                    return DropdownMenuItem<
+                                                                        Meshs>(
+                                                                      value:
+                                                                          value,
+                                                                      child: Text(
+                                                                          '${value.meshNo} ${value.meshType}',
+                                                                          style: TextStyle(
+                                                                              fontSize: 20,
+                                                                              fontWeight: FontWeight.bold)),
+                                                                    );
+                                                                }).toList(),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      actions: [
+                                                        RaisedButton(
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                dialogContext);
+                                                            Navigator.pop(
+                                                                dialogContext);
+                                                          },
+                                                          color: Colors.green,
+                                                          child: Text('Select'),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              }
                                             } else {
                                               drainages = [];
                                             }
                                             isDrainageBot = true;
                                           });
-
-                                          showDialog(
-                                            context: dialogContext,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: Text(
-                                                    'Select New Bottom Drainage Mesh'),
-                                                content: Container(
-                                                  height: 150,
-                                                  width: 500,
-                                                  child: Column(
-                                                    children: [
-                                                      SizedBox(height: 15),
-                                                      SizedBox(
-                                                        width: width * 0.9,
-                                                        child:
-                                                        DropdownButtonFormField(
-//                    decoration: InputDecoration(labelText: 'Drainage Mesh'),
-                                                          isExpanded: true,
-                                                          value: selDrainageBot,
-                                                          onChanged: (v) {
-                                                            selDrainageBot = v;
-                                                          },
-                                                          items: drainages.map<DropdownMenuItem<Meshs>>((Meshs value) {
-                                                            if (value.meshNo == selDrainageTop.meshNo ||
-                                                                value.meshNo == selMeshTop.meshNo ||
-                                                                value.meshNo == selMeshBot.meshNo)
-                                                              return DropdownMenuItem<Meshs>(
-                                                                value: value,
-                                                                child: Text('${value.meshNo} ${value.meshType}',
-                                                                    style: TextStyle(fontSize: 20,
-                                                                        fontWeight: FontWeight.bold,
-                                                                        color: Colors.white)),
-                                                              );
-                                                            if (value.meshNo != selDrainageTop.meshNo &&
-                                                                value.meshNo != selMeshTop.meshNo &&
-                                                                value.meshNo != selMeshBot.meshNo)
-                                                              return DropdownMenuItem<Meshs>(
-                                                                value: value,
-                                                                child: Text('${value.meshNo} ${value.meshType}',
-                                                                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                                                              );
-                                                          }).toList(),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                actions: [
-                                                  RaisedButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(
-                                                          dialogContext);
-                                                      Navigator.pop(
-                                                          dialogContext);
-                                                    },
-                                                    color: Colors.green,
-                                                    child: Text('Select'),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
                                         },
                                         color: Colors.green,
                                         child: Text('Yes'),
@@ -1484,30 +1581,48 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                         width: width * 0.90,
                         child: RaisedButton(
                           color: primaryColor,
-                          onPressed: () async {
+                          onPressed: isSaveLoading
+                            ? null
+                            : () async {
                             bool valOdStart = true;
                             bool valOdEnd = true;
+                            setState(() {
+                                isSaveLoading = true;
+                              });
                             if (_odStart.text.isNotEmpty) {
                               double val = double.parse(_odStart.text ?? "0");
-                              if (val < NumberFormatter.roundDouble(odVal - odNegVal, 3) ||
-                                  val > NumberFormatter.roundDouble(odVal + odPosVal + .004, 3)) {
+                              if (val <
+                                      NumberFormatter.roundDouble(
+                                          odVal - odNegVal, 3) ||
+                                  val >
+                                      NumberFormatter.roundDouble(
+                                          odVal + odPosVal + .004, 3)) {
                                 valOdStart = false;
                                 displayMessage();
                               }
                             } else if (_odEnd.text.isNotEmpty) {
                               double val = double.parse(_odEnd.text ?? "0");
-                              if (val < NumberFormatter.roundDouble(odVal - odNegVal, 3) ||
-                                  val > NumberFormatter.roundDouble(odVal + odPosVal + .004, 3)) {
+                              if (val <
+                                      NumberFormatter.roundDouble(
+                                          odVal - odNegVal, 3) ||
+                                  val >
+                                      NumberFormatter.roundDouble(
+                                          odVal + odPosVal + .004, 3)) {
                                 valOdEnd = false;
                                 displayMessage();
                               }
                             }
-                            if (_odStart.text.isNotEmpty && _odEnd.text.isNotEmpty && valOdStart && valOdEnd) {
+                            if (_odStart.text.isNotEmpty &&
+                                _odEnd.text.isNotEmpty &&
+                                valOdStart &&
+                                valOdEnd) {
                               Map<String, dynamic> map = {
                                 "tubeData": {
                                   "weld_chksheet": {
-                                    "setup_op": "${widget.pref.userDetails.userId}",
-                                    "mill_op": "${widget.pref.userDetails.userId}",
+                                    "setup_op":
+                                        "${widget.pref.userDetails.userId}",
+                                    "mill_op":
+                                        "${widget.pref.userDetails.userId}",
                                     "job": '${widget.pref.jobId}',
                                     "tube_id": '${widget.pref.currentTubeNo}',
                                     "od_check1": '${_odStart.text}',
@@ -1524,9 +1639,14 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                     "drain_mesh_bot": selDrainageBot.meshNo,
                                     "scrap_tube": isScrap ? 1 : 0,
                                     "isFirstTube": isFirstTube ? 1 : 0,
+                                    'isLastTube':
+                                        int.parse(data['tubesMill']) == 1
+                                            ? 1
+                                            : 0
                                   }
                                 }
                               };
+                              print('--e>>>>>>>>>>${json.encode(map)}');
                               await api.postTubeData(map);
 
                               //Update the api
@@ -1539,9 +1659,13 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                 if (nextTube == "") {
                                   setState(() {
                                     isScrap = false;
-                                    widget.pref.currentTubeNo = data['formData']['nextTube'];
-                                    widget.pref.currentTube = int.parse(widget.pref.currentTubeNo
-                                        .substring(widget.pref.currentTubeNo.indexOf('-') +1));
+                                    widget.pref.currentTubeNo =
+                                        data['formData']['nextTube'];
+                                    widget.pref.currentTube = int.parse(widget
+                                        .pref.currentTubeNo
+                                        .substring(widget.pref.currentTubeNo
+                                                .indexOf('-') +
+                                            1));
                                   });
                                 } else {
                                   setState(() {
@@ -1569,7 +1693,7 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                   Flushbar(
                                     title: "Scrapped tube up next",
                                     message:
-                                    "This tube was scrapped at inspection",
+                                        "This tube was scrapped at inspection",
                                     backgroundColor: Colors.blue,
                                     duration: Duration(seconds: 6),
                                   )..show(context);
@@ -1613,7 +1737,9 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                                 clearForm();
 
                                                 Navigator.of(context).pop();
-                                                Navigator.of(context).pushReplacementNamed(Routes.loginScreen);
+                                                Navigator.of(context)
+                                                    .pushReplacementNamed(
+                                                        Routes.loginScreen);
                                               },
                                               color: Colors.green,
                                               child: Text('Save'),
@@ -1640,17 +1766,31 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                               Flushbar(
                                 title: "Invalid value",
                                 message:
-                                "Please enter value in range/ all fields",
+                                    "Please enter value in range/ all fields",
                                 backgroundColor: Colors.red,
                                 duration: Duration(seconds: 2),
                               )..show(context);
                             }
+                              setState(() {
+                                isSaveLoading = false;
+                              });
                           },
-                          child: const Text('Save',
+                          child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('Save ',
                               style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
+                                  fontWeight: FontWeight.bold)
+                                  ),
+                                  if (isSaveLoading)
+                                    SizedBox(
+                                        width: 20,
+                                        height: 20,
+                                        child: CircularProgressIndicator())
+                                ], 
+                        ),
                         ),
                       ),
                     ],

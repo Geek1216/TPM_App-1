@@ -1,5 +1,4 @@
 <?php
-    
     //Get evrything from order table
     $sql = "SELECT * FROM orders_tbl WHERE job = $job";
 
@@ -35,7 +34,7 @@
 
 
     //Get all the Tubes
-    $sql4 = "SELECT * FROM tubes_tbl WHERE job = $job ORDER BY id";
+    $sql4 = "SELECT * FROM tubes_tbl WHERE job = $job";
 
     if ($result4= $conn -> query($sql4)) {
 

@@ -23,6 +23,7 @@ class _GeoFormRingInspectionState extends State<GeoFormRingInspection> {
   double width = 0;
   bool isOdChecked = false;
   bool isLengthChecked = false;
+  bool isSaveLoading = false;
   bool finish = false;
   bool od = false;
   bool id = false;
@@ -123,6 +124,12 @@ class _GeoFormRingInspectionState extends State<GeoFormRingInspection> {
     width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+         leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context)
+                                  .pushReplacementNamed(Routes.formSelectionScreen),
+        ),
+        centerTitle: true,
         title: Text('Geo Form Ring Inspection'),
       ),
       body: SingleChildScrollView(
@@ -697,7 +704,12 @@ class _GeoFormRingInspectionState extends State<GeoFormRingInspection> {
                       width: width * 0.90,
                       child: RaisedButton(
                         color: primaryColor,
-                        onPressed: () async {
+                        onPressed: isSaveLoading
+                            ? null
+                            : () async {
+                           setState(() {
+                            isSaveLoading = true;
+                          });
 //                          await validateLength();
 //                          await validateOD();
 
@@ -729,6 +741,9 @@ class _GeoFormRingInspectionState extends State<GeoFormRingInspection> {
                             backgroundColor: Colors.green,
                             duration: Duration(seconds: 2),
                           )..show(context);
+                           setState(() {
+                            isSaveLoading = false;
+                          });
 //                          } else {
 //                            Flushbar(
 //                              title: "Invalid value",
@@ -738,11 +753,20 @@ class _GeoFormRingInspectionState extends State<GeoFormRingInspection> {
 //                            )..show(context);
 //                          }
                         },
-                        child: const Text('Save',
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Save ',
                             style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold)),
+                              if (isSaveLoading)
+                                SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator())
+                            ]),
                       ),
                     ),
                   ],

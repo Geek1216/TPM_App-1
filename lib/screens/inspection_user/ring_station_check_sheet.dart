@@ -22,11 +22,13 @@ class RingStationCheckSheet extends StatefulWidget {
 class _RingStationCheckSheetState extends State<RingStationCheckSheet> {
   bool isEndOne = false;
   bool isEndTwo = false;
+  bool isRefreshLoading = false;
   double height = 0;
   double width = 0;
   int qty = 0;
   Map<String, dynamic> data;
   bool isDataLoading = false;
+  bool isSaveLoading = false;
   bool tubeAvail = false;
   double minRing = 0;
   double maxRing = 0;
@@ -84,6 +86,12 @@ class _RingStationCheckSheetState extends State<RingStationCheckSheet> {
     width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+         leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context)
+                                  .pushReplacementNamed(Routes.formSelectionScreen),
+        ),
+        centerTitle: true,
         title: Text('Ring Station - Check Sheet'),
       ),
       body: SingleChildScrollView(
@@ -134,8 +142,12 @@ class _RingStationCheckSheetState extends State<RingStationCheckSheet> {
                               color: secondaryColor,
                               onPressed: () async {
                                 //Update the api
+                                setState(() {
+                                  isRefreshLoading = true;
+                                });
                                 await api.getData(widget.pref);
                                 setState(() {
+                                  isRefreshLoading = false;
                                   data = json.decode(widget.pref.jobData);
 
                                   if (data['formData']['nextTubeExcl'] == "") {
@@ -154,10 +166,20 @@ class _RingStationCheckSheetState extends State<RingStationCheckSheet> {
                                   }
                                 });
                               },
-                              child: Text('Refresh',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold)),
+                              child:  Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text('Refresh',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold)),
+                                  if (isRefreshLoading)
+                                    SizedBox(
+                                        width: 20,
+                                        height: 20,
+                                        child: CircularProgressIndicator())
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -576,7 +598,12 @@ class _RingStationCheckSheetState extends State<RingStationCheckSheet> {
                       width: width * 0.90,
                       child: RaisedButton(
                         color: primaryColor,
-                        onPressed: () async {
+                        onPressed: isSaveLoading
+                            ? null
+                            : () async {
+                          setState(() {
+                            isSaveLoading = true;
+                          });
                           if (isEndOne && isEndTwo) {
                             Map<String, dynamic> map = {
                               "tubeData": {
@@ -617,7 +644,7 @@ class _RingStationCheckSheetState extends State<RingStationCheckSheet> {
                             clearForm();
                             setState(() {});
                             //check if excluder job is finished
-                            if (int.parse(data['tubesExcl']) == 0) {
+                            if (data['formData']['nextTubeExcl'] == 0) {
                               Navigator.of(context)
                                   .pushReplacementNamed(Routes.jobScreen);
                             }
@@ -635,12 +662,24 @@ class _RingStationCheckSheetState extends State<RingStationCheckSheet> {
                               duration: Duration(seconds: 2),
                             )..show(context);
                           }
+                          setState(() {
+                            isSaveLoading = false;
+                          });
                         },
-                        child: const Text('Save',
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Save ',
                             style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold)),
+                              if (isSaveLoading)
+                                SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator())
+                            ]),
                       ),
                     ),
 //                    SizedBox(

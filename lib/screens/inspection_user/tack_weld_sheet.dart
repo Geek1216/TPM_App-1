@@ -21,6 +21,7 @@ class TackWeldSheet extends StatefulWidget {
 
 class _TackWeldSheetState extends State<TackWeldSheet> {
   bool tubeAvail = false;
+  bool isSaveLoading = false;
   int tubesFinished = 0;
   double height = 0;
   double width = 0;
@@ -54,6 +55,12 @@ class _TackWeldSheetState extends State<TackWeldSheet> {
     width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context)
+              .pushReplacementNamed(Routes.formSelectionScreen),
+        ),
+        centerTitle: true,
         title: Text('Tack Weld Sheet'),
       ),
       body: SingleChildScrollView(
@@ -319,62 +326,80 @@ class _TackWeldSheetState extends State<TackWeldSheet> {
                       width: width * 0.90,
                       child: RaisedButton(
                         color: primaryColor,
-                        onPressed: () async {
-                          if ((_fromTube.text.isNotEmpty && _toTube.text.isNotEmpty)) {
-                            Map<String, dynamic> map = {
-                              "tubeData": {
-                                "tack_weld_checksheet": {
-                                  "tube_id_from": "${_fromTube.text}",
-                                  "tube_id_to": "${_toTube.text}",
-                                  "job": "${widget.pref.jobId}",
-                                  "tack_weld_insp":
-                                      "${widget.pref.userDetails.userId}"
+                        onPressed: isSaveLoading
+                            ? null
+                            : () async {
+                                setState(() {
+                                  isSaveLoading = true;
+                                });
+                                if ((_fromTube.text.isNotEmpty &&
+                                    _toTube.text.isNotEmpty)) {
+                                  Map<String, dynamic> map = {
+                                    "tubeData": {
+                                      "tack_weld_checksheet": {
+                                        "tube_id_from": "${_fromTube.text}",
+                                        "tube_id_to": "${_toTube.text}",
+                                        "job": "${widget.pref.jobId}",
+                                        "tack_weld_insp":
+                                            "${widget.pref.userDetails.userId}"
+                                      }
+                                    }
+                                  };
+                                  // post entered data
+                                  await api.postTubeData(map);
+
+                                  // update the api
+                                  await api.getData(widget.pref);
+                                  data = json.decode(widget.pref.jobData);
+
+                                  clearForm();
+                                  // setState(() {});
+
+                                  //check if tack_weld job is finished
+                                  if (int.parse(data['tubesTac']) == 0) {
+                                    Map<String, dynamic> endMap = {
+                                      "endData": {
+                                        "endJob": 1,
+                                        "tackWeld": 1,
+                                        "job": '${widget.pref.jobId}',
+                                      }
+                                    };
+                                    await api.postEndJob(endMap);
+                                    Navigator.of(context)
+                                        .pushReplacementNamed(Routes.jobScreen);
+                                  }
+                                  Flushbar(
+                                    title: "Ring Data Saved",
+                                    message: "Data saved successfully",
+                                    backgroundColor: Colors.green,
+                                    duration: Duration(seconds: 2),
+                                  )..show(context);
+                                } else {
+                                  Flushbar(
+                                    title: "Invalid value",
+                                    message: "Please enter all valid values",
+                                    backgroundColor: Colors.red,
+                                    duration: Duration(seconds: 2),
+                                  )..show(context);
                                 }
-                              }
-                            };
-                            // post entered data
-                            await api.postTubeData(map);
-
-                            // update the api
-                            await api.getData(widget.pref);
-                            data = json.decode(widget.pref.jobData);
-
-                            clearForm();
-                            // setState(() {});
-
-                            //check if tack_weld job is finished
-                            if (int.parse(data['tubesTac']) == 0) {
-                              Map<String, dynamic> endMap = {
-                                "endData": {
-                                  "endJob": 1,
-                                  "tackWeld": 1,
-                                  "job": '${widget.pref.jobId}',
-                                }
-                              };
-                              await api.postEndJob(endMap);
-                              Navigator.of(context)
-                                  .pushReplacementNamed(Routes.jobScreen);
-                            }
-                            Flushbar(
-                              title: "Ring Data Saved",
-                              message: "Data saved successfully",
-                              backgroundColor: Colors.green,
-                              duration: Duration(seconds: 2),
-                            )..show(context);
-                          } else {
-                            Flushbar(
-                              title: "Invalid value",
-                              message: "Please enter all valid values",
-                              backgroundColor: Colors.red,
-                              duration: Duration(seconds: 2),
-                            )..show(context);
-                          }
-                        },
-                        child: const Text('Save',
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold)),
+                                setState(() {
+                                  isSaveLoading = false;
+                                });
+                              },
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Save ',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold)),
+                              if (isSaveLoading)
+                                SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator())
+                            ]),
                       ),
                     ),
                   ],

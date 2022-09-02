@@ -29,6 +29,8 @@ class _CutoffStationCheckSheetState extends State<CutoffStationCheckSheet> {
   double lenPosVal = 0;
   double cutoffLenP = 0;
   double cutoffLenN = 0;
+  bool isRefreshLoading = false;
+  bool isSaveLoading = false;
 
   bool isFilter = false;
   bool _issueLenStart = true;
@@ -207,6 +209,12 @@ class _CutoffStationCheckSheetState extends State<CutoffStationCheckSheet> {
     width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context)
+              .pushReplacementNamed(Routes.formSelectionScreen),
+        ),
+        centerTitle: true,
         title: Text('Cutoff Station - Check Sheet'),
       ),
       body: SingleChildScrollView(
@@ -257,8 +265,12 @@ class _CutoffStationCheckSheetState extends State<CutoffStationCheckSheet> {
                               color: secondaryColor,
                               onPressed: () async {
                                 //Update the api
+                                setState(() {
+                                  isRefreshLoading = true;
+                                });
                                 await api.getData(widget.pref);
                                 setState(() {
+                                  isRefreshLoading = false;
                                   data = json.decode(widget.pref.jobData);
 
                                   if (data['formData']['nextTubeCut'] == "") {
@@ -277,10 +289,20 @@ class _CutoffStationCheckSheetState extends State<CutoffStationCheckSheet> {
                                   }
                                 });
                               },
-                              child: Text('Refresh',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text('Refresh',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold)),
+                                  if (isRefreshLoading)
+                                    SizedBox(
+                                        width: 20,
+                                        height: 20,
+                                        child: CircularProgressIndicator())
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -660,7 +682,12 @@ class _CutoffStationCheckSheetState extends State<CutoffStationCheckSheet> {
                       width: width * 0.90,
                       child: RaisedButton(
                         color: primaryColor,
-                        onPressed: () async {
+                        onPressed: isSaveLoading
+                            ? null
+                            :  () async {
+                          setState(() {
+                            isSaveLoading = true;
+                          });
                           validateLength();
                           if ((!_issueLenStart) &&
                               ((isFilter)
@@ -741,12 +768,24 @@ class _CutoffStationCheckSheetState extends State<CutoffStationCheckSheet> {
                               duration: Duration(seconds: 2),
                             )..show(context);
                           }
+                          setState(() {
+                            isSaveLoading = false;
+                          });
                         },
-                        child: const Text('Save',
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold)),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Save ',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold)),
+                              if (isSaveLoading)
+                                SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator())
+                            ]),
                       ),
                     ),
                   ],

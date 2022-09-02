@@ -101,6 +101,12 @@ class _PartMfgFromState extends State<PartMfgFrom> {
     width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context)
+                                  .pushReplacementNamed(Routes.weldingForm),
+        ),
+        centerTitle: true,
         title: Text('Part & Mfg info'),
       ),
       body: SingleChildScrollView(
@@ -244,7 +250,7 @@ class _PartMfgFromState extends State<PartMfgFrom> {
                           }
                         }
                       };
-
+                      print(json.encode(map));
                       Map<String, dynamic> res = await api.postTubeData(map);
 
                       if(res['first_tube_reg'] == true){
@@ -553,7 +559,7 @@ class _PartMfgFromState extends State<PartMfgFrom> {
                       SizedBox(
                         width: width * 0.90,
                         child: Text(
-                            'OD: ${data['formData']['od'] ?? "--"} +${data['formData']['odPos'] ?? "--"} -${data['formData']['odNeg'] ?? "--"}',
+                            '${data['formData']['isOd'] == '1' ? 'OD' : 'ID'}: ${data['formData']['od'] ?? "--"} +${data['formData']['odPos'] ?? "--"} -${data['formData']['odNeg'] ?? "--"}',
                             style: bigBoldFontStyle.copyWith(fontSize: 22)),
                       ),
                     ],

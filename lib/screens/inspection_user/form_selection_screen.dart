@@ -98,7 +98,14 @@ class _FormSelectionScreenState extends State<FormSelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Form selection')),
+      appBar: AppBar(
+         leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context)
+                                  .pushReplacementNamed(Routes.jobScreen),
+        ),
+        centerTitle: true,
+        title: Text('Form selection')),
       body: Container(
           height: MediaQuery.of(context).size.height - 50,
           child: ListView.builder(

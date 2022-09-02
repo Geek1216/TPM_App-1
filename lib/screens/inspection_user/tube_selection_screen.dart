@@ -51,7 +51,8 @@ class _TubeSelectionScreenState extends State<TubeSelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Tube Selection')),
+      appBar: AppBar(
+        title: Text('Tube Selection')),
       body: (isDataLoading)
           ? Container(child: Center(child: CircularProgressIndicator()))
           : Container(

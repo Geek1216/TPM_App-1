@@ -1,7 +1,7 @@
 <?php
 
 	//connect to database
-	$conn = new mysqli("localhost", "Preston", "Hartpre13", "tpm_forms");
+	$conn = new mysqli("127.0.0.1", "Preston", "Hartpre13", "tpm_forms");
 
 	//check connection
 	if($conn -> connect_errno){

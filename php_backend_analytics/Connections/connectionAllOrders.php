@@ -1,7 +1,7 @@
 <?php
 
 	//connect to database
-	$connOUT = new mysqli("localhost", "Preston", "Hartpre13", "u886168621_hart");
+	$connOUT = new mysqli("127.0.0.1", "Preston", "Hartpre13", "u886168621_hart");
 
 	//check connection
 	if($connOUT -> connect_errno){

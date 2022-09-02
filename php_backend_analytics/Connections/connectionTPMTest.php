@@ -1,6 +1,6 @@
 <?php
 
-	$conn = new mysqli("localhost", "root", "123456", "test_db_may");
+	$conn = new mysqli("127.0.0.1", "root", "root", "test_db_may");
 
 	//check connection
 	if($conn -> connect_errno){

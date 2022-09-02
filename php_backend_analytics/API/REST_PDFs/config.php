@@ -2,9 +2,9 @@
 define("SITE_URL", "/test-php/TPM_pdf/");
 define("DATE_FORMAT", "d-M-Y");
 
-define("MYSQL_HOST", "localhost");
+define("MYSQL_HOST", "127.0.0.1");
 define("MYSQL_USER", "root");
-define("MYSQL_PASS", "123456");
+define("MYSQL_PASS", "root");
 define("MYSQL_DB", "final");
 
 

@@ -33,10 +33,10 @@
                 }
                 
                 $mill = $dbResult['device'];
-
+                file_put_contents('php://stderr', print_r($mill, TRUE));
                 //get job number linked to that mill
                 $sql = "SELECT * FROM orders_tbl WHERE device = '".$mill."' AND has_finished = 0";
-
+                // $sql = "SELECT ot.*, count(tb.job) FROM `orders_tbl`ot LEFT JOIN `tubes_tbl` tb on tb.job= ot.job AND tb.mill_check='1'  Where ot.device='".$mill."'  AND ot.has_finished = 0 GROUP BY ot.job HAVING COUNT(tb.job) <> ot.quantity;";
                 $_resultConn = $conn -> query($sql);
 
                 if(!empty($_resultConn)){

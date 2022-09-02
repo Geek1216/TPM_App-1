@@ -7,9 +7,9 @@ class Mysql
     
     public function __construct()
     {
-        $host = "localhost";
+        $host = "127.0.0.1";
         $user = "root";
-        $password = "123456";
+        $password = "root";
         $database = "final";
         
         self::$db = $database;

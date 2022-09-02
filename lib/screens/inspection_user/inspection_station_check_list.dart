@@ -61,6 +61,9 @@ class _InspectionStationCheckListState
   Map<String, dynamic> data;
   // List<InspectionJobDetails> details;
   bool isDataLoading = false;
+  bool isRefreshLoading = false;
+  bool isSaveLoading = false;
+
   validateLength() {
     if (_length.text.isNotEmpty) {
       String val = "";
@@ -270,6 +273,12 @@ class _InspectionStationCheckListState
     width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context)
+              .pushReplacementNamed(Routes.formSelectionScreen),
+        ),
+        centerTitle: true,
         title: Text('Inspection Station Check List'),
       ),
       body: SingleChildScrollView(
@@ -317,43 +326,58 @@ class _InspectionStationCheckListState
                             height: 50,
                             width: width * .30,
                             child: RaisedButton(
-                              color: secondaryColor,
-                              onPressed: () async {
-                                //Update the api
-                                await api.getData(widget.pref);
+                                color: secondaryColor,
+                                onPressed: () async {
+                                  setState(() {
+                                    isRefreshLoading = true;
+                                  });
 
-                                setState(() {
-                                  data = json.decode(widget.pref.jobData);
+                                  //Update the api
+                                  await api.getData(widget.pref);
 
-                                  if (data['formData']['nextTubeInsp'] == "") {
-                                    tubeAvail = false;
-                                  } else {
-                                    widget.pref.currentTubeNo =
-                                        data['formData']['nextTubeInsp'];
+                                  setState(() {
+                                    isRefreshLoading = false;
+                                    data = json.decode(widget.pref.jobData);
 
-                                    widget.pref.currentTube = int.parse(widget
-                                        .pref.currentTubeNo
-                                        .substring(widget.pref.currentTubeNo
-                                                .indexOf('-') +
-                                            1));
+                                    if (data['formData']['nextTubeInsp'] ==
+                                        "") {
+                                      tubeAvail = false;
+                                    } else {
+                                      widget.pref.currentTubeNo =
+                                          data['formData']['nextTubeInsp'];
 
-                                    tubeAvail = true;
-                                  }
+                                      widget.pref.currentTube = int.parse(widget
+                                          .pref.currentTubeNo
+                                          .substring(widget.pref.currentTubeNo
+                                                  .indexOf('-') +
+                                              1));
 
-                                  //setting the dimension display to visible or not
-                                  if ((widget.pref.currentTube == 1) &&
-                                      dimDrift) {
-                                    displayDim = true;
-                                  } else {
-                                    displayDim = false;
-                                  }
-                                });
-                              },
-                              child: Text('Refresh',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold)),
-                            ),
+                                      tubeAvail = true;
+                                    }
+
+                                    //setting the dimension display to visible or not
+                                    if ((widget.pref.currentTube == 1) &&
+                                        dimDrift) {
+                                      displayDim = true;
+                                    } else {
+                                      displayDim = false;
+                                    }
+                                  });
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text('Refresh',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold)),
+                                    if (isRefreshLoading)
+                                      SizedBox(
+                                          width: 20,
+                                          height: 20,
+                                          child: CircularProgressIndicator())
+                                  ],
+                                )),
                           ),
                         ),
                       ],
@@ -435,7 +459,7 @@ class _InspectionStationCheckListState
                         SizedBox(
                           width: width * 0.9,
                           child: Text(
-                              'OD: ${data['formData']['od'] ?? "--"} +${data['formData']['odPos'] ?? "--"} -${data['formData']['odNeg'] ?? "--"}',
+                              '${data['formData']['isOd'] == '1' ? 'OD' : 'ID'}: ${data['formData']['od'] ?? "--"} +${data['formData']['odPos'] ?? "--"} -${data['formData']['odNeg'] ?? "--"}',
                               style: bigBoldFontStyle.copyWith()),
                         ),
                       ],
@@ -639,7 +663,8 @@ class _InspectionStationCheckListState
                                       await api.getData(widget.pref);
                                       data = json.decode(widget.pref.jobData);
 
-                                      if (data['formData']['nextTubeInsp'] == "") {
+                                      if (data['formData']['nextTubeInsp'] ==
+                                          "") {
                                         tubeAvail = false;
                                       } else {
                                         // //check if nextTube is an additional scrap tube to update remaining tubes
@@ -657,10 +682,14 @@ class _InspectionStationCheckListState
                                         //   widget.pref.currentTube++;
                                         // }
 
-                                        widget.pref.currentTubeNo = data['formData']['nextTubeInsp'];
+                                        widget.pref.currentTubeNo =
+                                            data['formData']['nextTubeInsp'];
 
                                         widget.pref.currentTube = int.parse(
-                                            widget.pref.currentTubeNo.substring(widget.pref.currentTubeNo.indexOf('-') + 1));
+                                            widget.pref.currentTubeNo.substring(
+                                                widget.pref.currentTubeNo
+                                                        .indexOf('-') +
+                                                    1));
                                         tubeAvail = true;
                                       }
 
@@ -924,7 +953,12 @@ class _InspectionStationCheckListState
                       width: width * 0.90,
                       child: RaisedButton(
                         color: primaryColor,
-                        onPressed: () async {
+                        onPressed: isSaveLoading
+                            ? null
+                            : () async {
+                          setState(() {
+                            isSaveLoading = true;
+                          });
                           await validateLength();
                           await validateOD();
                           await validateIdDrift();
@@ -1008,8 +1042,8 @@ class _InspectionStationCheckListState
 
                             //ending job, check for excluder job and geoform job
                             if ((int.parse(data['tubesInsp']) == 0) &&
-                                (int.parse(data['ringMax1']) == 0) &&
-                                (int.parse(data['ringMax2']) == 0) &&
+                                // (int.parse(data['ringMax1']) == 0) &&
+                                // (int.parse(data['ringMin1']) == 0) &&
                                 (int.parse(data['final_len_geo']) == 0)) {
                               Map<String, dynamic> endMap = {
                                 "endData": {
@@ -1042,12 +1076,24 @@ class _InspectionStationCheckListState
                               duration: Duration(seconds: 2),
                             )..show(context);
                           }
+                          setState(() {
+                            isSaveLoading = false;
+                          });
                         },
-                        child: const Text('Save',
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold)),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Save ',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold)),
+                              if (isSaveLoading)
+                                SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator())
+                            ]),
                       ),
                     ),
                   ],
