@@ -40,135 +40,121 @@ class _ModeSelectionScreenState extends State<ModeSelectionScreen> {
           color: secondaryColor,
           height: MediaQuery.of(context).size.height,
           child: Center(
+              child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 20, top: 20),
               child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                height: 80,
-                margin: EdgeInsets.only(bottom: 5,left:30,right:30),
-                padding: EdgeInsets.only(left:10,right:10),
-                child: Image.asset("assets/icon/logo.png"),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 80,
+                    margin: EdgeInsets.only(bottom: 5, left: 30, right: 30),
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Image.asset("assets/icon/logo.png"),
+                  ),
+                  SizedBox(height: 10),
+                  widget.pref.millName == ""
+                      ? Text('Device not connected')
+                      : Text('This device is connected with :${widget.pref.millName}'),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(minimumSize: const Size(230, 40), maximumSize: const Size(250, 40)),
+                    onPressed: () {
+                      if (widget.pref.millName == "") {
+                        Flushbar(
+                          title: "Device not connected",
+                          message: "Please select device first",
+                          backgroundColor: Colors.red,
+                          duration: Duration(seconds: 2),
+                        )..show(context);
+                      } else {
+                        widget.pref.mode = 1;
+                        Navigator.of(context).pushReplacementNamed(Routes.loginScreen);
+                      }
+                    },
+                    child: Text('Mill operator mode', style: bigBoldFontStyle),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(minimumSize: const Size(230, 40), maximumSize: const Size(250, 40)),
+                    onPressed: () {
+                      widget.pref.mode = 2;
+                      Navigator.of(context).pushReplacementNamed(Routes.loginScreen);
+                    },
+                    child: Text('Inspection user mode', style: bigBoldFontStyle),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(minimumSize: const Size(230, 40), maximumSize: const Size(250, 40)),
+                    onPressed: () {
+                      widget.pref.mode = 4;
+                      Navigator.of(context).pushReplacementNamed(Routes.loginScreen);
+                    },
+                    child: Text('GeoForm mode', style: bigBoldFontStyle),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(minimumSize: const Size(230, 40), maximumSize: const Size(250, 40)),
+                    onPressed: () {
+                      widget.pref.mode = 3;
+                      Navigator.of(context).pushReplacementNamed(Routes.loginScreen);
+                    },
+                    child: Text('Mesh jobs mode', style: bigBoldFontStyle),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(minimumSize: const Size(230, 40), maximumSize: const Size(250, 40)),
+                    onPressed: () {
+                      widget.pref.mode = 5;
+                      Navigator.of(context).pushReplacementNamed(Routes.loginScreen);
+                    },
+                    child: Text('Stamping mode', style: bigBoldFontStyle),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(minimumSize: const Size(230, 40), maximumSize: const Size(250, 40)),
+                    onPressed: () {
+                      widget.pref.mode = 6;
+                      Navigator.of(context).pushReplacementNamed(Routes.loginScreen);
+                    },
+                    child: Text('Steel Receiving', style: bigBoldFontStyle),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(minimumSize: const Size(230, 40), maximumSize: const Size(250, 40)),
+                    onPressed: () {
+                      Navigator.of(context).pushReplacementNamed(Routes.deviceSetupScreen);
+                    },
+                    child: Text('Setup Device', style: bigBoldFontStyle),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(minimumSize: const Size(230, 40), maximumSize: const Size(250, 40)),
+                    onPressed: () {
+                      Navigator.of(context).pushReplacementNamed(Routes.serverSetup);
+                    },
+                    child: Text('Server Setup', style: bigBoldFontStyle),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                ],
               ),
-              SizedBox( height: 10 ),
-              widget.pref.millName == ""
-                  ? Text('Device not connected')
-                  : Text(
-                      'This device is connected with :${widget.pref.millName}'),
-              SizedBox( height: 10 ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(230, 40),
-                    maximumSize: const Size(250, 40)
-                ),
-                onPressed: () {
-                  if (widget.pref.millName == "") {
-                    Flushbar(
-                      title: "Device not connected",
-                      message: "Please select device first",
-                      backgroundColor: Colors.red,
-                      duration: Duration(seconds: 2),
-                    )..show(context);
-                  } else {
-                    widget.pref.mode = 1;
-                    Navigator.of(context)
-                        .pushReplacementNamed(Routes.loginScreen);
-                  }
-                },
-                child: Text('Mill operator mode', style: bigBoldFontStyle),
-              ),
-              SizedBox(
-                height: 20,
-              ),              
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(230, 40),
-                    maximumSize: const Size(250, 40)
-                ),
-                onPressed: () {
-                  widget.pref.mode = 2;
-                  Navigator.of(context)
-                      .pushReplacementNamed(Routes.loginScreen);
-                },
-                child: Text('Inspection user mode', style: bigBoldFontStyle),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(230, 40),
-                  maximumSize: const Size(250, 40)
-                ),
-                onPressed: () {
-                  widget.pref.mode = 4;
-                  Navigator.of(context)
-                      .pushReplacementNamed(Routes.loginScreen);
-                },
-                child: Text('GeoForm mode', style: bigBoldFontStyle),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(230, 40),
-                    maximumSize: const Size(250, 40)
-                ),
-                onPressed: () {
-                  widget.pref.mode = 3;
-                  Navigator.of(context)
-                      .pushReplacementNamed(Routes.loginScreen);
-                },
-                child: Text('Mesh jobs mode', style: bigBoldFontStyle),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(230, 40),
-                    maximumSize: const Size(250, 40)
-                ),
-                onPressed: () {
-                  widget.pref.mode = 5;
-                  Navigator.of(context)
-                      .pushReplacementNamed(Routes.loginScreen);
-                },
-                child: Text('Stamping mode', style: bigBoldFontStyle),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(230, 40),
-                    maximumSize: const Size(250, 40)
-                ),
-                onPressed: () {
-                  widget.pref.mode = 6;
-                  Navigator.of(context)
-                      .pushReplacementNamed(Routes.loginScreen);
-                },
-                child: Text('Steel Receiving', style: bigBoldFontStyle),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(230, 40),
-                    maximumSize: const Size(250, 40)
-                ),
-                onPressed: () {
-                  Navigator.of(context)
-                      .pushReplacementNamed(Routes.deviceSetupScreen);
-                },
-                child: Text('Setup Device', style: bigBoldFontStyle),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-            ],
+            ),
           ))),
     );
   }

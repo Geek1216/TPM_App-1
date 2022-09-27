@@ -21,6 +21,7 @@ class Routes {
   static const ringStationCheckSheet = "/ring_station_check_sheet";
   static const jobWaitingScreen = "/job_waiting_screen";
   static const deviceSetupScreen = "/device_setup";
+  static const serverSetup = "/server_setup";
   static const tackWeldSheet = "/tack_weld_sheet";
   static const jobScreenMesh = "/job_screen_mesh";
   static const meshComboScreen = "/mesh_combo_screen";

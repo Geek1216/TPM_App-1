@@ -36,18 +36,15 @@ class _TubeMillSetupState extends State<TubeMillSetup> {
                             children: [
                               SizedBox(
                                 width: width * 0.32,
-                                child: Text('Job#: 7750',
-                                    style: bigBoldFontStyle.copyWith()),
+                                child: Text('Job#: 7750', style: bigBoldFontStyle.copyWith()),
                               ),
                               SizedBox(
                                 width: width * 0.32,
-                                child: Text('PO#: PO31107226',
-                                    style: bigBoldFontStyle.copyWith()),
+                                child: Text('PO#: PO31107226', style: bigBoldFontStyle.copyWith()),
                               ),
                               SizedBox(
                                 width: width * 0.32,
-                                child: Text('Line Item: 1',
-                                    style: bigBoldFontStyle.copyWith()),
+                                child: Text('Line Item: 1', style: bigBoldFontStyle.copyWith()),
                               ),
                             ],
                           ),
@@ -55,13 +52,11 @@ class _TubeMillSetupState extends State<TubeMillSetup> {
                             children: [
                               SizedBox(
                                 width: width * 0.32,
-                                child: Text('Date: 01-Jul-2020',
-                                    style: bigBoldFontStyle.copyWith()),
+                                child: Text('Date: 01-Jul-2020', style: bigBoldFontStyle.copyWith()),
                               ),
                               SizedBox(
                                 width: width * 0.32,
-                                child: Text('Type: 316L',
-                                    style: bigBoldFontStyle.copyWith()),
+                                child: Text('Type: 316L', style: bigBoldFontStyle.copyWith()),
                               ),
                             ],
                           ),
@@ -71,18 +66,9 @@ class _TubeMillSetupState extends State<TubeMillSetup> {
                 Container(
                   child: TabBar(
                     tabs: [
-                      Tab(
-                          child: Text('Basic Details',
-                              style: bigBoldFontStyle.copyWith(
-                                  color: Colors.black))),
-                      Tab(
-                          child: Text('MFG Notes',
-                              style: bigBoldFontStyle.copyWith(
-                                  color: Colors.black))),
-                      Tab(
-                          child: Text('Mill Inspection ',
-                              style: bigBoldFontStyle.copyWith(
-                                  color: Colors.black))),
+                      Tab(child: Text('Basic Details', style: bigBoldFontStyle.copyWith(color: Colors.black))),
+                      Tab(child: Text('MFG Notes', style: bigBoldFontStyle.copyWith(color: Colors.black))),
+                      Tab(child: Text('Mill Inspection ', style: bigBoldFontStyle.copyWith(color: Colors.black))),
                     ],
                   ),
                 ),
@@ -109,10 +95,7 @@ class _TubeMillSetupState extends State<TubeMillSetup> {
                                         });
                                       },
                                       child: const Text('Show more',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold)),
+                                          style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold)),
                                     ),
                                   ),
                                 ),
@@ -123,16 +106,13 @@ class _TubeMillSetupState extends State<TubeMillSetup> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
                                           Row(
                                             children: [
                                               SizedBox(
                                                 width: width * 0.95,
-                                                child: Text(
-                                                    'Cutoff: 290  +0.125  +0.125',
-                                                    style: bigBoldFontStyle),
+                                                child: Text('Cutoff: 290  +0.125  +0.125', style: bigBoldFontStyle),
                                               ),
                                             ],
                                           ),
@@ -143,9 +123,7 @@ class _TubeMillSetupState extends State<TubeMillSetup> {
                                             children: [
                                               SizedBox(
                                                 width: width * 0.95,
-                                                child: Text(
-                                                    'OD: 4.626   +0.03  +0.03',
-                                                    style: bigBoldFontStyle),
+                                                child: Text('OD: 4.626   +0.03  +0.03', style: bigBoldFontStyle),
                                               ),
                                             ],
                                           ),
@@ -174,28 +152,21 @@ class _TubeMillSetupState extends State<TubeMillSetup> {
                                             height: 15,
                                           ),
                                           Row(
-                                            children: [
-                                              Text('Welding',
-                                                  style: bigBoldFontStyle)
-                                            ],
+                                            children: [Text('Welding', style: bigBoldFontStyle)],
                                           ),
                                           Row(
                                             children: [
                                               SizedBox(
                                                 width: width * 0.35,
-                                                child: Text(
-                                                    'Spec Mill: TPM-WPS-316S',
-                                                    style: bigBoldFontStyle),
+                                                child: Text('Spec Mill: TPM-WPS-316S', style: bigBoldFontStyle),
                                               ),
                                               SizedBox(
                                                 width: width * 0.3,
-                                                child: Text('Amps: 218-270',
-                                                    style: bigBoldFontStyle),
+                                                child: Text('Amps: 218-270', style: bigBoldFontStyle),
                                               ),
                                               SizedBox(
                                                 width: width * 0.3,
-                                                child: Text('Volts: 13.9-14.3',
-                                                    style: bigBoldFontStyle),
+                                                child: Text('Volts: 13.9-14.3', style: bigBoldFontStyle),
                                               ),
                                             ],
                                           ),
@@ -203,25 +174,19 @@ class _TubeMillSetupState extends State<TubeMillSetup> {
                                             children: [
                                               SizedBox(
                                                 width: width * 0.30,
-                                                child: Text(
-                                                    'Min. Travel Speed : 40-57',
-                                                    style: bigBoldFontStyle),
+                                                child: Text('Min. Travel Speed : 40-57', style: bigBoldFontStyle),
                                               ),
                                               SizedBox(
                                                 width: width * 0.25,
-                                                child: Text(
-                                                    'Torch height: .575',
-                                                    style: bigBoldFontStyle),
+                                                child: Text('Torch height: .575', style: bigBoldFontStyle),
                                               ),
                                               SizedBox(
                                                 width: width * 0.20,
-                                                child: Text('Arc Length: 0.075',
-                                                    style: bigBoldFontStyle),
+                                                child: Text('Arc Length: 0.075', style: bigBoldFontStyle),
                                               ),
                                               SizedBox(
                                                 width: width * 0.20,
-                                                child: Text('Torch angle: 12',
-                                                    style: bigBoldFontStyle),
+                                                child: Text('Torch angle: 12', style: bigBoldFontStyle),
                                               ),
                                             ],
                                           ),
@@ -237,11 +202,7 @@ class _TubeMillSetupState extends State<TubeMillSetup> {
                                                 });
                                               },
                                               child: const Text('Show less',
-                                                  style: TextStyle(
-                                                      fontSize: 20,
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
+                                                  style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold)),
                                             ),
                                           ),
                                           SizedBox(height: 8),
@@ -260,17 +221,14 @@ class _TubeMillSetupState extends State<TubeMillSetup> {
                                   children: [
                                     SizedBox(height: 10),
                                     Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Container(
-                                          padding: EdgeInsets.only(
-                                              left: 10.0, right: 10),
+                                          padding: EdgeInsets.only(left: 10.0, right: 10),
                                           child: Column(children: <Widget>[
                                             DateTimeField(
                                               decoration: InputDecoration(
-                                                hintText:
-                                                    'Setup start time: (${format.pattern})',
+                                                hintText: 'Setup start time: (${format.pattern})',
                                                 border: new OutlineInputBorder(
                                                   borderSide: new BorderSide(
                                                     color: Colors.grey,
@@ -278,13 +236,11 @@ class _TubeMillSetupState extends State<TubeMillSetup> {
                                                 ),
                                               ),
                                               format: format,
-                                              onShowPicker:
-                                                  (context, currentValue) {
+                                              onShowPicker: (context, currentValue) {
                                                 return showDatePicker(
                                                     context: context,
                                                     firstDate: DateTime(1900),
-                                                    initialDate: currentValue ??
-                                                        DateTime.now(),
+                                                    initialDate: currentValue ?? DateTime.now(),
                                                     lastDate: DateTime(2100));
                                               },
                                             ),
@@ -296,11 +252,8 @@ class _TubeMillSetupState extends State<TubeMillSetup> {
                                     Container(
                                       width: width,
                                       child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 12.0),
-                                        child: Text('Bend Test ',
-                                            textAlign: TextAlign.left,
-                                            style: bigBoldFontStyle),
+                                        padding: const EdgeInsets.only(left: 12.0),
+                                        child: Text('Bend Test ', textAlign: TextAlign.left, style: bigBoldFontStyle),
                                       ),
                                     ),
                                     Row(
@@ -335,8 +288,7 @@ class _TubeMillSetupState extends State<TubeMillSetup> {
                                     ),
                                     SizedBox(height: 10),
                                     Container(
-                                      padding: EdgeInsets.only(
-                                          left: 10.0, right: 10),
+                                      padding: EdgeInsets.only(left: 10.0, right: 10),
                                       child: TextField(
                                         decoration: InputDecoration(
                                           hintText: 'Operator for Setup ',
@@ -350,8 +302,7 @@ class _TubeMillSetupState extends State<TubeMillSetup> {
                                     ),
                                     SizedBox(height: 10),
                                     Container(
-                                      padding: EdgeInsets.only(
-                                          left: 10.0, right: 10),
+                                      padding: EdgeInsets.only(left: 10.0, right: 10),
                                       child: TextField(
                                         decoration: InputDecoration(
                                           hintText: 'Operator Notes',
@@ -371,10 +322,7 @@ class _TubeMillSetupState extends State<TubeMillSetup> {
                                         color: primaryColor,
                                         onPressed: () {},
                                         child: const Text('Save',
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold)),
+                                            style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold)),
                                       ),
                                     ),
                                     SizedBox(height: 10),
@@ -401,37 +349,25 @@ class _TubeMillSetupState extends State<TubeMillSetup> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(height: 5),
-                                Text('1. Clean mill table and area ',
-                                    style: bigBoldFontStyle),
+                                Text('1. Clean mill table and area ', style: bigBoldFontStyle),
                                 SizedBox(height: 5),
-                                Text('2. Receive setup paperwork ',
-                                    style: bigBoldFontStyle),
+                                Text('2. Receive setup paperwork ', style: bigBoldFontStyle),
                                 SizedBox(height: 5),
-                                Text('3. Check steel for straightness ',
-                                    style: bigBoldFontStyle),
+                                Text('3. Check steel for straightness ', style: bigBoldFontStyle),
                                 SizedBox(height: 5),
-                                Text('4. Inspect die and clamps ',
-                                    style: bigBoldFontStyle),
+                                Text('4. Inspect die and clamps ', style: bigBoldFontStyle),
                                 SizedBox(height: 5),
-                                Text('5. Check level of front plate  ',
-                                    style: bigBoldFontStyle),
+                                Text('5. Check level of front plate  ', style: bigBoldFontStyle),
                                 SizedBox(height: 5),
-                                Text('6. Check that table is level ',
-                                    style: bigBoldFontStyle),
+                                Text('6. Check that table is level ', style: bigBoldFontStyle),
                                 SizedBox(height: 5),
-                                Text(
-                                    '7. Check that all chains, adjustment nuts, and bolts are tight',
-                                    style: bigBoldFontStyle),
+                                Text('7. Check that all chains, adjustment nuts, and bolts are tight', style: bigBoldFontStyle),
                                 SizedBox(height: 5),
-                                Text(
-                                    '8. Use the proper shoot and shim as per paperwork (last setup) ',
-                                    style: bigBoldFontStyle),
+                                Text('8. Use the proper shoot and shim as per paperwork (last setup) ', style: bigBoldFontStyle),
                                 SizedBox(height: 5),
-                                Text('9. Fill out pre-startup check sheet',
-                                    style: bigBoldFontStyle),
+                                Text('9. Fill out pre-startup check sheet', style: bigBoldFontStyle),
                                 SizedBox(height: 5),
-                                Text('10. If needed, get a second opinion',
-                                    style: bigBoldFontStyle),
+                                Text('10. If needed, get a second opinion', style: bigBoldFontStyle),
                               ],
                             ),
                           ),

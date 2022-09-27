@@ -17,8 +17,7 @@ class PreferencesService {
     _sharedPreferences.setBool("isOrderStarted", val);
   }
 
-  bool get isOrderStarted =>
-      _sharedPreferences.getBool("isOrderStarted") ?? false;
+  bool get isOrderStarted => _sharedPreferences.getBool("isOrderStarted") ?? false;
 
   //mode 1- 2-
   set mode(int val) {
@@ -96,8 +95,7 @@ class PreferencesService {
     _sharedPreferences.setString("tubeListSheet", val);
   }
 
-  String get tubeListSheet =>
-      _sharedPreferences.getString("tubeListSheet") ?? "";
+  String get tubeListSheet => _sharedPreferences.getString("tubeListSheet") ?? "";
 
   set jobStarted(String val) {
     _sharedPreferences.setString("jobStarted", val);
@@ -115,19 +113,16 @@ class PreferencesService {
     _sharedPreferences.setString("currentTubeNo", val);
   }
 
-  String get currentTubeNo =>
-      _sharedPreferences.getString("currentTubeNo") ?? "0";
+  String get currentTubeNo => _sharedPreferences.getString("currentTubeNo") ?? "0";
 
   set jobwisetubeDetails(String val) {
     _sharedPreferences.setString("jobwisetubeDetails", val);
   }
 
-  String get jobwisetubeDetails =>
-      _sharedPreferences.getString("jobwisetubeDetails") ?? "";
+  String get jobwisetubeDetails => _sharedPreferences.getString("jobwisetubeDetails") ?? "";
 
   set deviceList(List<DeviceList> val) {
-    _sharedPreferences.setString(
-        "deviceList", json.encode(List<DeviceList>.from(val.map((x) => x))));
+    _sharedPreferences.setString("deviceList", json.encode(List<DeviceList>.from(val.map((x) => x))));
   }
 
   List<DeviceList> get deviceList {
@@ -145,6 +140,14 @@ class PreferencesService {
     print('user $user');
     return (user != null) ? FetchToken.fromJson(json.decode(user)) : null;
   }
+
+  //new BaseUrl
+  set updateBaseURl(String val) {
+    _sharedPreferences.setString("updateBaseURl", val);
+  }
+
+  //get new BaseUrl
+  String get getNewBaseURl => _sharedPreferences.getString("updateBaseURl") ?? "";
 
   BuildContext context;
 

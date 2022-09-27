@@ -61,15 +61,13 @@ class _DeviceSetupScreenState extends State<DeviceSetupScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           DropdownButtonFormField(
-                            decoration:
-                                InputDecoration(labelText: 'Select Mill'),
+                            decoration: InputDecoration(labelText: 'Select Mill'),
                             isExpanded: true,
                             value: selectedMill,
                             onChanged: (v) {
                               selectedMill = v;
                             },
-                            items: millList.map<DropdownMenuItem<DeviceList>>(
-                                (DeviceList value) {
+                            items: millList.map<DropdownMenuItem<DeviceList>>((DeviceList value) {
                               return DropdownMenuItem<DeviceList>(
                                 value: value,
                                 child: Text('${value.device}'),
@@ -81,8 +79,7 @@ class _DeviceSetupScreenState extends State<DeviceSetupScreen> {
                             child: RaisedButton(
                               color: primaryColor,
                               onPressed: () async {
-                                var ret = await api.setDeviceMAC(
-                                    widget.pref, selectedMill.device);
+                                var ret = await api.setDeviceMAC(widget.pref, selectedMill.device);
                                 if (ret != null) {
                                   if (ret['result'] == 1 || ret['result'] == 2)
                                     Flushbar(
@@ -106,8 +103,7 @@ class _DeviceSetupScreenState extends State<DeviceSetupScreen> {
                               },
                               child: Text(
                                 'Update',
-                                style:
-                                    bigFontStyle.copyWith(color: Colors.white),
+                                style: bigFontStyle.copyWith(color: Colors.white),
                               ),
                             ),
                           )
@@ -116,8 +112,7 @@ class _DeviceSetupScreenState extends State<DeviceSetupScreen> {
                     ),
                   ),
                 )
-              : Container(
-                  child: Center(child: Text('Problem in fetching data....'))),
+              : Container(child: Center(child: Text('Problem in fetching data....'))),
     );
   }
 }
