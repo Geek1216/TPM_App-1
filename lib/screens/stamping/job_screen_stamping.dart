@@ -97,7 +97,7 @@ class _JobScreenStampingState extends State<JobScreenStamping> {
               children: [
                 Text(
                   //'Job #' + job.substring(0, job.indexOf('\n')),
-                  'Job #' + job,
+                  'Job12 #' + job,
                   style: bigFontStyle.copyWith(
                     color: primaryColor,
                     fontSize: 26,
