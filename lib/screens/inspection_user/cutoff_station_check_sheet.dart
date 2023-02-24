@@ -223,8 +223,10 @@ class _CutoffStationCheckSheetState extends State<CutoffStationCheckSheet> {
                         SizedBox(
                           height: 50,
                           width: width * .30,
-                          child: RaisedButton(
-                            color: secondaryColor,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: secondaryColor,
+                            ),
                             onPressed: () {
                               Navigator.of(context)
                                   .pushReplacementNamed(Routes.loginScreen);
@@ -237,8 +239,10 @@ class _CutoffStationCheckSheetState extends State<CutoffStationCheckSheet> {
                         SizedBox(
                           height: 50,
                           width: width * .30,
-                          child: RaisedButton(
-                            color: secondaryColor,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: secondaryColor,
+                            ),
                             onPressed: () {
                               Navigator.of(context)
                                   .pushReplacementNamed(Routes.jobScreen);
@@ -253,8 +257,10 @@ class _CutoffStationCheckSheetState extends State<CutoffStationCheckSheet> {
                           child: SizedBox(
                             height: 50,
                             width: width * .30,
-                            child: RaisedButton(
-                              color: secondaryColor,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: secondaryColor,
+                              ),
                               onPressed: () async {
                                 //Update the api
                                 await api.getData(widget.pref);
@@ -658,8 +664,10 @@ class _CutoffStationCheckSheetState extends State<CutoffStationCheckSheet> {
                     SizedBox(
                       height: 50,
                       width: width * 0.90,
-                      child: RaisedButton(
-                        color: primaryColor,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: primaryColor,
+                        ),
                         onPressed: () async {
                           validateLength();
                           if ((!_issueLenStart) &&

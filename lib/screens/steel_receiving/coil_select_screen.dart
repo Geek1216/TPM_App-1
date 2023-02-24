@@ -61,8 +61,10 @@ class CoilSelectScreenState extends State<CoilSelectScreen> {
                           SizedBox(
                             height: 50,
                             width: width * .30,
-                            child: RaisedButton(
-                              color: secondaryColor,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: primaryColor,
+                              ),
                               onPressed: () {
                                 Navigator.of(context)
                                     .pushReplacementNamed(Routes.loginScreen);
@@ -76,8 +78,10 @@ class CoilSelectScreenState extends State<CoilSelectScreen> {
                           SizedBox(
                             height: 50,
                             width: width * .30,
-                            child: RaisedButton(
-                              color: secondaryColor,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: primaryColor,
+                              ),
                               onPressed: () {
                                 Navigator.of(context)
                                     .pushReplacementNamed(Routes.modeSelection);
@@ -157,7 +161,10 @@ class CoilSelectScreenState extends State<CoilSelectScreen> {
                   ),
                 ),
                 actions: [
-                  RaisedButton(
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.green,
+                    ),
                     onPressed: () async {
                       Map<String, dynamic> map = {
                         "checkInCoilData": {
@@ -175,14 +182,15 @@ class CoilSelectScreenState extends State<CoilSelectScreen> {
                       });
                       Navigator.of(context).pop();
                     },
-                    color: Colors.green,
                     child: Text('Yes'),
                   ),
-                  RaisedButton(
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
+                    ),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    color: Colors.red,
                     child: Text('No'),
                   )
                 ],

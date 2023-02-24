@@ -29,7 +29,7 @@ dependencies {
     // https://firebase.google.com/docs/android/setup#available-libraries
 }
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
 
     lintOptions {
         disable 'InvalidPackage'
@@ -38,8 +38,8 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.allysoftsolutions.tpmapp"
-        minSdkVersion 20
-        targetSdkVersion 31
+        minSdkVersion 24
+        targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }

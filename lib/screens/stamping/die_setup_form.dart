@@ -535,7 +535,10 @@ class _DieSetupFormState extends State<DieSetupForm> {
                             children: [
                               SizedBox(
                                 width: width * 0.3,
-                                child: RaisedButton(
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: primaryColor,
+                                    ),
                                     onPressed: () async {
                                       var coils = coilsFromJson(
                                               json.encode(data['coils'])) ??
@@ -576,7 +579,6 @@ class _DieSetupFormState extends State<DieSetupForm> {
                                         }
                                       }
                                     },
-                                    color: primaryColor,
                                     child: Text(
                                       'Ok',
                                       style: bigFontStyle.copyWith(
@@ -585,11 +587,13 @@ class _DieSetupFormState extends State<DieSetupForm> {
                               ),
                               SizedBox(
                                 width: width * 0.3,
-                                child: RaisedButton(
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: secondaryColor,
+                                    ),
                                     onPressed: () {
                                       loadData();
                                     },
-                                    color: secondaryColor,
                                     child: Text(
                                       'Refresh',
                                       style: bigFontStyle,

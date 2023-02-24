@@ -242,8 +242,10 @@ class CycleCheckSheetFormState extends State<CycleCheckSheetForm> {
               SizedBox(
                 height: 50,
                 width: width * .30,
-                child: RaisedButton(
-                  color: secondaryColor,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: secondaryColor,
+                  ),
                   onPressed: () {
                     Navigator.of(context)
                         .pushReplacementNamed(Routes.loginScreen);
@@ -256,8 +258,10 @@ class CycleCheckSheetFormState extends State<CycleCheckSheetForm> {
               SizedBox(
                 height: 50,
                 width: width * .30,
-                child: RaisedButton(
-                  color: secondaryColor,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: secondaryColor,
+                  ),
                   onPressed: () {
                     Navigator.of(context)
                         .pushReplacementNamed(Routes.dieSetupForm);
@@ -294,8 +298,10 @@ class CycleCheckSheetFormState extends State<CycleCheckSheetForm> {
                   SizedBox(
                     height: 50,
                     width: width * .49,
-                    child: RaisedButton(
-                      color: secondaryColor,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: secondaryColor,
+                      ),
                       onPressed: () async {
                         //Update the api
                         await api.getDataStamping(widget.pref);
@@ -329,8 +335,10 @@ class CycleCheckSheetFormState extends State<CycleCheckSheetForm> {
                   SizedBox(
                     height: 50,
                     width: width * .49,
-                    child: RaisedButton(
-                      color: secondaryColor,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: secondaryColor,
+                      ),
                       onPressed: () async {
                         //Update the api
                         await api.getDataStamping(widget.pref);
@@ -601,8 +609,10 @@ class CycleCheckSheetFormState extends State<CycleCheckSheetForm> {
                       SizedBox(
                         height: 50,
                         width: width * 0.45,
-                        child: RaisedButton(
-                          color: secondaryColor,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: secondaryColor,
+                          ),
                           onPressed: () {
                             showDialog(
                               context: context,
@@ -640,7 +650,10 @@ class CycleCheckSheetFormState extends State<CycleCheckSheetForm> {
                                     ),
                                   ),
                                   actions: [
-                                    RaisedButton(
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.green,
+                                      ),
                                       onPressed: () async {
                                         await api.postBadStamp(
                                             widget.pref,
@@ -652,14 +665,15 @@ class CycleCheckSheetFormState extends State<CycleCheckSheetForm> {
 
                                         Navigator.of(context).pop();
                                       },
-                                      color: Colors.green,
                                       child: Text('Bad Stamp'),
                                     ),
-                                    RaisedButton(
+                                    ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                primary: Colors.red,
+                                ),
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                       },
-                                      color: Colors.red,
                                       child: Text('No'),
                                     )
                                   ],
@@ -861,7 +875,7 @@ class CycleCheckSheetFormState extends State<CycleCheckSheetForm> {
                     height: 80,
                     width: width * .45,
                     padding: EdgeInsets.only(left: 10.0, right: 10, top: 20),
-                    child: RaisedButton(
+                    child: ElevatedButton(
                       onPressed: () {
                         double dimp1 = double.parse(_dimple1.text ?? "0");
                         double dimp2 = double.parse(_dimple2.text ?? "0");
@@ -918,8 +932,10 @@ class CycleCheckSheetFormState extends State<CycleCheckSheetForm> {
                   child: SizedBox(
                     height: 50,
                     width: width * 0.3,
-                    child: RaisedButton(
-                      color: primaryColor,
+                    child: ElevatedButton(
+    style: ElevatedButton.styleFrom(
+    primary: primaryColor,
+    ),
                       onPressed: () {
                         BuildContext dialogContext;
                         showDialog(
@@ -950,7 +966,10 @@ class CycleCheckSheetFormState extends State<CycleCheckSheetForm> {
                                 ),
                               ),
                               actions: [
-                                RaisedButton(
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                    primary: Colors.green,
+                                  ),
                                   onPressed: () async {
                                     isCoil = true;
                                     if (isCont && _hitCount.text.isNotEmpty) {
@@ -1012,14 +1031,15 @@ class CycleCheckSheetFormState extends State<CycleCheckSheetForm> {
                                       }
                                     }
                                   },
-                                  color: Colors.green,
                                   child: Text('Yes'),
                                 ),
-                                RaisedButton(
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                  primary: Colors.red,
+                                  ),
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  color: Colors.red,
                                   child: Text('No'),
                                 )
                               ],
@@ -1062,8 +1082,10 @@ class CycleCheckSheetFormState extends State<CycleCheckSheetForm> {
                       SizedBox(
                         height: 50,
                         width: width * 0.90,
-                        child: RaisedButton(
-                          color: primaryColor,
+                        child: ElevatedButton(
+    style: ElevatedButton.styleFrom(
+    primary: primaryColor,
+    ),
                           onPressed: () async {
                             if (!issueAvgDimple && _opID.text.isNotEmpty) {
                               if (!isCont &&

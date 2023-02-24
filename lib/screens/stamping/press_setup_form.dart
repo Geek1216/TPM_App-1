@@ -134,7 +134,10 @@ class _PressSetupFormState extends State<PressSetupForm> {
               ),
               SizedBox(
                   width: width * 0.9,
-                  child: RaisedButton(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: primaryColor,
+                    ),
                     onPressed: () async {
 //                      Navigator.of(context).pushNamed(Routes.millInstSetup);
                       setState(() {
@@ -146,7 +149,6 @@ class _PressSetupFormState extends State<PressSetupForm> {
                       'Next',
                       style: bigFontStyle.copyWith(color: Colors.white),
                     ),
-                    color: primaryColor,
                   ))
             ],
           )),
@@ -173,7 +175,10 @@ class _PressSetupFormState extends State<PressSetupForm> {
               ),
               SizedBox(
                   width: width * 0.9,
-                  child: RaisedButton(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: primaryColor,
+                    ),
                     onPressed: () {
                       widget.pref.jobStarted = DateFormat('dd-MM-yyyy hh:mm a').format(DateTime.now());
                       setState(() {
@@ -184,7 +189,6 @@ class _PressSetupFormState extends State<PressSetupForm> {
                       'Start',
                       style: bigFontStyle.copyWith(color: Colors.white),
                     ),
-                    color: primaryColor,
                   ))
             ],
           )),
@@ -288,7 +292,10 @@ class _PressSetupFormState extends State<PressSetupForm> {
                             children: [
                               SizedBox(
                                 width: width * 0.45,
-                                child: RaisedButton(
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: primaryColor,
+                                    ),
                                     onPressed: () {
                                       var coils = coilsFromJson(
                                               json.encode(data['coils'])) ??
@@ -306,7 +313,6 @@ class _PressSetupFormState extends State<PressSetupForm> {
                                             .pushReplacementNamed(
                                                 Routes.dieSetupForm);
                                     },
-                                    color: primaryColor,
                                     child: Text(
                                       'Ok',
                                       style: bigFontStyle.copyWith(
@@ -315,8 +321,10 @@ class _PressSetupFormState extends State<PressSetupForm> {
                               ),
                               SizedBox(
                                 width: width * 0.45,
-                                child: RaisedButton(
-                                  color: secondaryColor,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: secondaryColor,
+                                  ),
                                   onPressed: () async {
                                     //Update the api
                                     await apiCall.getDataStamping(widget.pref);

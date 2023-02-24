@@ -51,11 +51,13 @@ class _JobWaitingScreenState extends State<JobWaitingScreen> {
                         SizedBox(
                           height: 50,
                         ),
-                        RaisedButton(
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.red,
+                          ),
                           onPressed: () {
                             fetchJobs();
                           },
-                          color: secondaryColor,
                           child: Text('Refresh',
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),

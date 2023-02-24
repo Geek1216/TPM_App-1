@@ -138,7 +138,10 @@ class _TubeMillSetupFormState extends State<TubeMillSetupForm> {
               ),
               SizedBox(
                   width: width * 0.9,
-                  child: RaisedButton(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: primaryColor,
+                    ),
                     onPressed: () {
 //                      Navigator.of(context).pushNamed(Routes.millInstSetup);
                       setState(() {
@@ -149,7 +152,6 @@ class _TubeMillSetupFormState extends State<TubeMillSetupForm> {
                       'Next',
                       style: bigFontStyle.copyWith(color: Colors.white),
                     ),
-                    color: primaryColor,
                   ))
             ],
           )),
@@ -176,7 +178,10 @@ class _TubeMillSetupFormState extends State<TubeMillSetupForm> {
               ),
               SizedBox(
                   width: width * 0.9,
-                  child: RaisedButton(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: primaryColor,
+                    ),
                     onPressed: () {
                       widget.pref.jobStarted = DateFormat('dd-MM-yyyy hh:mm a')
                           .format(DateTime.now());
@@ -188,7 +193,6 @@ class _TubeMillSetupFormState extends State<TubeMillSetupForm> {
                       'Start',
                       style: bigFontStyle.copyWith(color: Colors.white),
                     ),
-                    color: primaryColor,
                   ))
             ],
           )),
@@ -282,7 +286,10 @@ class _TubeMillSetupFormState extends State<TubeMillSetupForm> {
                             children: [
                               SizedBox(
                                 width: width * 0.3,
-                                child: RaisedButton(
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: primaryColor,
+                                    ),
                                     onPressed: () {
                                       var coils = coilsFromJson(json.encode(data['formData']['coils'])) ?? [];
                                       var meshs = meshsFromJson(json.encode(data['formData']['mesh'])) ?? [];
@@ -298,7 +305,6 @@ class _TubeMillSetupFormState extends State<TubeMillSetupForm> {
                                       } else
                                         Navigator.of(context).pushReplacementNamed(Routes.partMfgInfo);
                                     },
-                                    color: primaryColor,
                                     child: Text(
                                       'Ok',
                                       style: bigFontStyle.copyWith(
@@ -307,14 +313,16 @@ class _TubeMillSetupFormState extends State<TubeMillSetupForm> {
                               ),
                               SizedBox(
                                 width: width * 0.3,
-                                child: RaisedButton(
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: secondaryColor,
+                                    ),
                                     onPressed: () {
                                       loadData();
                                       setState(() {
                                         isStarted = 0;
                                       });
                                     },
-                                    color: secondaryColor,
                                     child: Text(
                                       'Start again',
                                       style: bigFontStyle,

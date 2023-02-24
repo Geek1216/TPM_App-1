@@ -214,8 +214,10 @@ class _GeoCutoffStationCheckSheetState
                         SizedBox(
                           height: 50,
                           width: width * .30,
-                          child: RaisedButton(
-                            color: secondaryColor,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: secondaryColor,
+                            ),
                             onPressed: () {
                               Navigator.of(context)
                                   .pushReplacementNamed(Routes.loginScreen);
@@ -228,8 +230,10 @@ class _GeoCutoffStationCheckSheetState
                         SizedBox(
                           height: 50,
                           width: width * .30,
-                          child: RaisedButton(
-                            color: secondaryColor,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: secondaryColor,
+                            ),
                             onPressed: () {
                               Navigator.of(context)
                                   .pushReplacementNamed(Routes.modeSelection);
@@ -242,8 +246,10 @@ class _GeoCutoffStationCheckSheetState
                         SizedBox(
                           height: 50,
                           width: width * .30,
-                          child: RaisedButton(
-                            color: secondaryColor,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: secondaryColor,
+                            ),
                             onPressed: () {
                               Navigator.of(context).pushReplacementNamed(
                                   Routes.tubeSelectionScreen);
@@ -614,8 +620,10 @@ class _GeoCutoffStationCheckSheetState
                     SizedBox(
                       height: 50,
                       width: width * 0.90,
-                      child: RaisedButton(
-                        color: primaryColor,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: primaryColor,
+                        ),
                         onPressed: () async {
                           validateLength();
                           if ((!_issueLenStart) &&

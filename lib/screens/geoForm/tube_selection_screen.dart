@@ -61,8 +61,10 @@ class _TubeSelectionScreenState extends State<TubeSelectionScreen> {
                     child: SizedBox(
                       height: 50,
                       width: width * .45,
-                      child: RaisedButton(
-                        color: secondaryColor,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: secondaryColor,
+                        ),
                         onPressed: () {
                           Navigator.of(context)
                               .pushReplacementNamed(Routes.modeSelection);
@@ -78,8 +80,10 @@ class _TubeSelectionScreenState extends State<TubeSelectionScreen> {
                     child: SizedBox(
                       height: 50,
                       width: width * .45,
-                      child: RaisedButton(
-                        color: secondaryColor,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: secondaryColor,
+                        ),
                         onPressed: () async {
                           //Update the api
                           tubes = await api.getGeoTubes(

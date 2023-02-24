@@ -48,11 +48,13 @@ class _JobScreenStampingState extends State<JobScreenStamping> {
                         SizedBox(
                           height: 50,
                         ),
-                        RaisedButton(
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: secondaryColor,
+                          ),
                           onPressed: () {
                             fetchJobs();
                           },
-                          color: secondaryColor,
                           child: Text('Refresh',
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),

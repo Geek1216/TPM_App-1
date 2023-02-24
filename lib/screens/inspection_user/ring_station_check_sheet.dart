@@ -100,8 +100,10 @@ class _RingStationCheckSheetState extends State<RingStationCheckSheet> {
                         SizedBox(
                           height: 50,
                           width: width * .30,
-                          child: RaisedButton(
-                            color: secondaryColor,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: secondaryColor,
+                            ),
                             onPressed: () {
                               Navigator.of(context)
                                   .pushReplacementNamed(Routes.loginScreen);
@@ -114,8 +116,10 @@ class _RingStationCheckSheetState extends State<RingStationCheckSheet> {
                         SizedBox(
                           height: 50,
                           width: width * .30,
-                          child: RaisedButton(
-                            color: secondaryColor,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: secondaryColor,
+                            ),
                             onPressed: () {
                               Navigator.of(context)
                                   .pushReplacementNamed(Routes.jobScreen);
@@ -130,8 +134,10 @@ class _RingStationCheckSheetState extends State<RingStationCheckSheet> {
                           child: SizedBox(
                             height: 50,
                             width: width * .30,
-                            child: RaisedButton(
-                              color: secondaryColor,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: secondaryColor,
+                              ),
                               onPressed: () async {
                                 //Update the api
                                 await api.getData(widget.pref);
@@ -417,7 +423,7 @@ class _RingStationCheckSheetState extends State<RingStationCheckSheet> {
                       height: 80,
                       width: (width - 40) / 3,
                       padding: EdgeInsets.only(left: 10.0, right: 10, top: 20),
-                      child: RaisedButton(
+                      child: ElevatedButton(
                         onPressed: () {
                           double x = double.parse(_endOneF.text ?? "0");
                           double y = double.parse(_endOneS.text ?? "0");
@@ -498,7 +504,7 @@ class _RingStationCheckSheetState extends State<RingStationCheckSheet> {
                       height: 80,
                       width: (width - 40) / 3,
                       padding: EdgeInsets.only(left: 10.0, right: 10, top: 20),
-                      child: RaisedButton(
+                      child: ElevatedButton(
                         onPressed: () {
                           double x = double.parse(_endTwoF.text ?? "0");
                           double y = double.parse(_endTwoS.text ?? "0");
@@ -574,8 +580,10 @@ class _RingStationCheckSheetState extends State<RingStationCheckSheet> {
                     SizedBox(
                       height: 50,
                       width: width * 0.90,
-                      child: RaisedButton(
-                        color: primaryColor,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: primaryColor,
+                        ),
                         onPressed: () async {
                           if (isEndOne && isEndTwo) {
                             Map<String, dynamic> map = {

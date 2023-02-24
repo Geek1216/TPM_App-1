@@ -214,8 +214,10 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                       SizedBox(
                         height: 50,
                         width: width * .30,
-                        child: RaisedButton(
-                          color: secondaryColor,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: secondaryColor,
+                          ),
                           onPressed: () {
                             Navigator.of(context).pushReplacementNamed(Routes.loginScreen);
                           },
@@ -227,8 +229,10 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                       SizedBox(
                         height: 50,
                         width: width * .30,
-                        child: RaisedButton(
-                          color: secondaryColor,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: secondaryColor,
+                          ),
                           onPressed: () {
                             Navigator.of(context)
                                 .pushReplacementNamed(Routes.partMfgInfo);
@@ -247,7 +251,10 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                   if (int.parse(data['tubesMill']) == qty)
                     SizedBox(
                       width: width * 0.95,
-                      child: RaisedButton(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: primaryColor,
+                          ),
                           onPressed: () async {
                             //setting the material to material of inital setup
                             await api.getData(widget.pref);
@@ -281,7 +288,6 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                               started = true;
                             });
                           },
-                          color: primaryColor,
                           child: Text(
                             'Start Order',
                             style: bigFontStyle.copyWith(color: Colors.white),
@@ -306,8 +312,10 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                           SizedBox(
                             height: 50,
                             width: width * .49,
-                            child: RaisedButton(
-                              color: secondaryColor,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: secondaryColor,
+                              ),
                               onPressed: () async {
                                 //Update the api
                                 await api.getData(widget.pref);
@@ -732,8 +740,10 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                   child: SizedBox(
                     height: 50,
                     width: width * 0.3,
-                    child: RaisedButton(
-                      color: primaryColor,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: primaryColor,
+                      ),
                       onPressed: () {
                         BuildContext dialogContext;
                         showDialog(
@@ -810,11 +820,13 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                             ),
                                           ),
                                           actions: [
-                                            RaisedButton(
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                primary: Colors.green,
+                                              ),
                                               onPressed: () {
                                                 Navigator.pop(dialogContext);
                                               },
-                                              color: Colors.green,
                                               child: Text('Select'),
                                             ),
                                           ],
@@ -826,11 +838,13 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
                                   child: Text('Yes'),
                                 ),
-                                RaisedButton(
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.red,
+                                  ),
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  color: Colors.red,
                                   child: Text('No'),
                                 )
                               ],
@@ -854,8 +868,10 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                         SizedBox(
                           height: 50,
                           width: width * 0.3,
-                          child: RaisedButton(
-                            color: secondaryColor,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: secondaryColor,
+                            ),
                             onPressed: () {
                               BuildContext dialogContext;
                               showDialog(
@@ -878,7 +894,10 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                       ),
                                     ),
                                     actions: [
-                                      RaisedButton(
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.green,
+                                        ),
                                         onPressed: () async {
                                           Map<String, dynamic> material = {
                                             "materialData": {
@@ -949,14 +968,16 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                                   ),
                                                 ),
                                                 actions: [
-                                                  RaisedButton(
+                                                  ElevatedButton(
+                                                    style: ElevatedButton.styleFrom(
+                                                      primary: Colors.green,
+                                                    ),
                                                     onPressed: () {
                                                       Navigator.pop(
                                                           dialogContext);
                                                       Navigator.pop(
                                                           dialogContext);
                                                     },
-                                                    color: Colors.green,
                                                     child: Text('Select'),
                                                   ),
                                                 ],
@@ -964,14 +985,15 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                             },
                                           );
                                         },
-                                        color: Colors.green,
                                         child: Text('Yes'),
                                       ),
-                                      RaisedButton(
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.red,
+                                        ),
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
-                                        color: Colors.red,
                                         child: Text('No'),
                                       )
                                     ],
@@ -989,8 +1011,10 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                         SizedBox(
                           height: 50,
                           width: width * 0.3,
-                          child: RaisedButton(
-                            color: secondaryColor,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: secondaryColor,
+                            ),
                             onPressed: () {
                               BuildContext dialogContext;
                               showDialog(
@@ -1013,7 +1037,10 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                       ),
                                     ),
                                     actions: [
-                                      RaisedButton(
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.green,
+                                        ),
                                         onPressed: () async {
                                           Map<String, dynamic> material = {
                                             "materialData": {
@@ -1115,14 +1142,16 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                                   ),
                                                 ),
                                                 actions: [
-                                                  RaisedButton(
+                                                  ElevatedButton(
+                                                    style: ElevatedButton.styleFrom(
+                                                      primary: Colors.green,
+                                                    ),
                                                     onPressed: () {
                                                       Navigator.pop(
                                                           dialogContext);
                                                       Navigator.pop(
                                                           dialogContext);
                                                     },
-                                                    color: Colors.green,
                                                     child: Text('Select'),
                                                   ),
                                                 ],
@@ -1130,14 +1159,15 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                             },
                                           );
                                         },
-                                        color: Colors.green,
                                         child: Text('Yes'),
                                       ),
-                                      RaisedButton(
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.red,
+                                        ),
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
-                                        color: Colors.red,
                                         child: Text('No'),
                                       )
                                     ],
@@ -1163,8 +1193,10 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                         SizedBox(
                           height: 50,
                           width: width * 0.3,
-                          child: RaisedButton(
-                            color: primaryColor,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: primaryColor,
+                            ),
                             onPressed: () {
                               BuildContext dialogContext;
                               showDialog(
@@ -1187,7 +1219,10 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                       ),
                                     ),
                                     actions: [
-                                      RaisedButton(
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.green,
+                                        ),
                                         onPressed: () async {
                                           Map<String, dynamic> material = {
                                             "materialData": {
@@ -1291,14 +1326,16 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                                   ),
                                                 ),
                                                 actions: [
-                                                  RaisedButton(
+                                                  ElevatedButton(
+                                                    style: ElevatedButton.styleFrom(
+                                                      primary: Colors.green,
+                                                    ),
                                                     onPressed: () {
                                                       Navigator.pop(
                                                           dialogContext);
                                                       Navigator.pop(
                                                           dialogContext);
                                                     },
-                                                    color: Colors.green,
                                                     child: Text('Select'),
                                                   ),
                                                 ],
@@ -1306,14 +1343,15 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                             },
                                           );
                                         },
-                                        color: Colors.green,
                                         child: Text('Yes'),
                                       ),
-                                      RaisedButton(
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.red,
+                                        ),
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
-                                        color: Colors.red,
                                         child: Text('No'),
                                       )
                                     ],
@@ -1333,8 +1371,7 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                         SizedBox(
                           height: 50,
                           width: width * 0.3,
-                          child: RaisedButton(
-                            color: primaryColor,
+                          child: ElevatedButton(
                             onPressed: () {
                               BuildContext dialogContext;
                               showDialog(
@@ -1357,7 +1394,10 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                       ),
                                     ),
                                     actions: [
-                                      RaisedButton(
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.green,
+                                        ),
                                         onPressed: () async {
                                           Map<String, dynamic> material = {
                                             "materialData": {
@@ -1433,14 +1473,16 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                                   ),
                                                 ),
                                                 actions: [
-                                                  RaisedButton(
+                                                  ElevatedButton(
+                                                    style: ElevatedButton.styleFrom(
+                                                      primary: Colors.green,
+                                                    ),
                                                     onPressed: () {
                                                       Navigator.pop(
                                                           dialogContext);
                                                       Navigator.pop(
                                                           dialogContext);
                                                     },
-                                                    color: Colors.green,
                                                     child: Text('Select'),
                                                   ),
                                                 ],
@@ -1448,14 +1490,15 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                             },
                                           );
                                         },
-                                        color: Colors.green,
                                         child: Text('Yes'),
                                       ),
-                                      RaisedButton(
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.red,
+                                        ),
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
-                                        color: Colors.red,
                                         child: Text('No'),
                                       )
                                     ],
@@ -1482,8 +1525,10 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                       SizedBox(
                         height: 50,
                         width: width * 0.90,
-                        child: RaisedButton(
-                          color: primaryColor,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: primaryColor,
+                          ),
                           onPressed: () async {
                             bool valOdStart = true;
                             bool valOdEnd = true;
@@ -1603,7 +1648,10 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                             ),
                                           ),
                                           actions: [
-                                            RaisedButton(
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                primary: Colors.green,
+                                              ),
                                               onPressed: () async {
                                                 await api.postWeight(
                                                     widget.pref,
@@ -1615,7 +1663,6 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
                                                 Navigator.of(context).pop();
                                                 Navigator.of(context).pushReplacementNamed(Routes.loginScreen);
                                               },
-                                              color: Colors.green,
                                               child: Text('Save'),
                                             ),
                                           ],

@@ -118,8 +118,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(16.0, 16, 16, 8),
-                      child: RaisedButton(
-                        color: primaryColor,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: secondaryColor,
+                        ),
                         onPressed: () async {
                           if (_userid.text.isEmpty)
                             Flushbar(

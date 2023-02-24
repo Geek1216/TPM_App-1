@@ -143,7 +143,7 @@ class _TestScreenState extends State<TestScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: <Widget>[
-              RaisedButton(
+              ElevatedButton(
                 child: Text('Pass',
                     style: TextStyle(
                         fontSize: 36,
@@ -227,7 +227,10 @@ class _TestScreenState extends State<TestScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: <Widget>[
-              RaisedButton(
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: primaryColor,
+                ),
                 child: Text('Pass',
                     style: TextStyle(
                         fontSize: 36,

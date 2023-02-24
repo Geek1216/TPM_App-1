@@ -109,8 +109,10 @@ class _PartMfgFromState extends State<PartMfgFrom> {
             SizedBox(
               height: 50,
               width: width * .30,
-              child: RaisedButton(
-                color: secondaryColor,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                ),
                 onPressed: () async {
                   await api.getData(widget.pref);
                   setState(() {
@@ -187,7 +189,10 @@ class _PartMfgFromState extends State<PartMfgFrom> {
             _getUserInputs(),
             SizedBox(
               width: width * 0.9,
-              child: RaisedButton(
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: primaryColor,
+                  ),
                   onPressed: () async {
                     if (meshs.length > 0) {
                       if (selMeshTop.meshNo == selMeshBot.meshNo &&
@@ -254,7 +259,6 @@ class _PartMfgFromState extends State<PartMfgFrom> {
                       }
                     }
                   },
-                  color: primaryColor,
                   child: Text(
                     'Ok',
                     style: bigFontStyle.copyWith(color: Colors.white),

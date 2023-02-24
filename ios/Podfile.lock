@@ -1,0 +1,61 @@
+PODS:
+  - device_info (0.0.1):
+    - Flutter
+  - Flutter (1.0.0)
+  - fluttertoast (0.0.2):
+    - Flutter
+    - Toast
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - platform_device_id (0.0.1):
+    - Flutter
+  - shared_preferences_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - Toast (4.0.0)
+  - wifi_iot (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - device_info (from `.symlinks/plugins/device_info/ios`)
+  - Flutter (from `Flutter`)
+  - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
+  - platform_device_id (from `.symlinks/plugins/platform_device_id/ios`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/ios`)
+  - wifi_iot (from `.symlinks/plugins/wifi_iot/ios`)
+
+SPEC REPOS:
+  trunk:
+    - Toast
+
+EXTERNAL SOURCES:
+  device_info:
+    :path: ".symlinks/plugins/device_info/ios"
+  Flutter:
+    :path: Flutter
+  fluttertoast:
+    :path: ".symlinks/plugins/fluttertoast/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/ios"
+  platform_device_id:
+    :path: ".symlinks/plugins/platform_device_id/ios"
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/ios"
+  wifi_iot:
+    :path: ".symlinks/plugins/wifi_iot/ios"
+
+SPEC CHECKSUMS:
+  device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  fluttertoast: eb263d302cc92e04176c053d2385237e9f43fad0
+  path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
+  platform_device_id: 81b3e2993881f87d0c82ef151dc274df4869aef5
+  shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
+  Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
+  wifi_iot: b5aafd6f9b52f8a357383a1deabab45f31cd602d
+
+PODFILE CHECKSUM: 4e8f8b2be68aeea4c0d5beb6ff1e79fface1d048
+
+COCOAPODS: 1.11.3

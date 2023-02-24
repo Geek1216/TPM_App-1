@@ -82,8 +82,10 @@ class _WeldingSCSheetState extends State<WeldingSCSheet> {
                               child: Container(
                                 height: 50,
                                 width: width * 0.95,
-                                child: RaisedButton(
-                                  color: primaryColor,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: primaryColor,
+                                  ),
                                   onPressed: () {
                                     setState(() {
                                       isStarted = true;
@@ -209,8 +211,10 @@ class _WeldingSCSheetState extends State<WeldingSCSheet> {
                                       Container(
                                         height: 50,
                                         width: width * 0.9,
-                                        child: RaisedButton(
-                                          color: primaryColor,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            primary: primaryColor,
+                                          ),
                                           onPressed: () {
                                             setState(() {
                                               isStarted = false;
@@ -325,8 +329,10 @@ class _WeldingSCSheetState extends State<WeldingSCSheet> {
                                     Container(
                                       height: 50,
                                       width: width * 0.9,
-                                      child: RaisedButton(
-                                        color: primaryColor,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: primaryColor,
+                                        ),
                                         onPressed: () {
                                           setState(() {
                                             isStarted = false;
@@ -371,8 +377,10 @@ class _WeldingSCSheetState extends State<WeldingSCSheet> {
                                 Container(
                                   height: 50,
                                   width: width * 0.95,
-                                  child: RaisedButton(
-                                    color: primaryColor,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: primaryColor,
+                                    ),
                                     onPressed: () {
                                       setState(() {
                                         isStarted = true;
@@ -433,8 +441,10 @@ class _WeldingSCSheetState extends State<WeldingSCSheet> {
                                         Container(
                                           height: 50,
                                           width: width * 0.9,
-                                          child: RaisedButton(
-                                            color: primaryColor,
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              primary: primaryColor,
+                                            ),
                                             onPressed: () {
                                               setState(() {
                                                 isStarted = false;
@@ -611,7 +621,7 @@ class _WeldingSCSheetState extends State<WeldingSCSheet> {
                         Container(
                           height: 28,
                           alignment: Alignment.centerRight,
-                          child: FlatButton(
+                          child: ElevatedButton(
                             onPressed: () {
                               setState(() {
                                 selectedTube = -1;
@@ -695,8 +705,10 @@ class _WeldingSCSheetState extends State<WeldingSCSheet> {
                   Container(
                     height: 50,
                     width: width * 0.9,
-                    child: RaisedButton(
-                      color: primaryColor,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: primaryColor,
+                      ),
                       onPressed: () {
                         setState(() {
                           selectedTube = -1;

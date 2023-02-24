@@ -73,8 +73,10 @@ class _MeshJobScreenState extends State<MeshJobScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: SizedBox(
                           height: 50,
-                          child: RaisedButton(
-                            color: secondaryColor,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: secondaryColor,
+                            ),
                             onPressed: () async {
                               //Update the api
                               await apiCall.getMeshJobData(widget.pref);

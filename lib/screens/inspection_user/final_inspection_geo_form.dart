@@ -152,8 +152,10 @@ class _FinalInspectionGeoFormState extends State<FinalInspectionGeoForm> {
             SizedBox(
               height: 50,
               width: width * .30,
-              child: RaisedButton(
-                color: secondaryColor,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: secondaryColor,
+                ),
                 onPressed: () {
                   Navigator.of(context).pushReplacementNamed(Routes.jobScreen);
                 },
@@ -379,8 +381,10 @@ class _FinalInspectionGeoFormState extends State<FinalInspectionGeoForm> {
                     SizedBox(
                       height: 50,
                       width: width * 0.45,
-                      child: RaisedButton(
-                        color: secondaryColor,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: secondaryColor,
+                        ),
                         onPressed: () {
                           showDialog(
                             context: context,
@@ -408,7 +412,10 @@ class _FinalInspectionGeoFormState extends State<FinalInspectionGeoForm> {
                                   ),
                                 ),
                                 actions: [
-                                  RaisedButton(
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.green,
+                                    ),
                                     onPressed: () async {
                                       await api.postScarp(
                                           widget.pref,
@@ -424,14 +431,15 @@ class _FinalInspectionGeoFormState extends State<FinalInspectionGeoForm> {
                                       setState(() {});
                                       Navigator.of(context).pop();
                                     },
-                                    color: Colors.green,
                                     child: Text('Yes'),
                                   ),
-                                  RaisedButton(
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.red,
+                                    ),
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    color: Colors.red,
                                     child: Text('No'),
                                   )
                                 ],
@@ -687,8 +695,10 @@ class _FinalInspectionGeoFormState extends State<FinalInspectionGeoForm> {
                     SizedBox(
                       height: 50,
                       width: width * 0.90,
-                      child: RaisedButton(
-                        color: primaryColor,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: primaryColor,
+                        ),
                         onPressed: () async {
                           await validateLength();
                           await validateOD();

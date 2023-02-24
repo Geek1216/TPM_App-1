@@ -76,8 +76,10 @@ class _DeviceSetupScreenState extends State<DeviceSetupScreen> {
                           ),
                           SizedBox(height: 10),
                           Center(
-                            child: RaisedButton(
-                              color: primaryColor,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: primaryColor,
+                              ),
                               onPressed: () async {
                                 var ret = await api.setDeviceMAC(widget.pref, selectedMill.device);
                                 if (ret != null) {

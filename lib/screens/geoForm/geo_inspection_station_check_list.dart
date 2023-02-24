@@ -270,8 +270,10 @@ class _GeoInspectionStationCheckListState
                         SizedBox(
                           height: 50,
                           width: width * .30,
-                          child: RaisedButton(
-                            color: secondaryColor,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: secondaryColor,
+                            ),
                             onPressed: () {
                               Navigator.of(context)
                                   .pushReplacementNamed(Routes.loginScreen);
@@ -284,8 +286,10 @@ class _GeoInspectionStationCheckListState
                         SizedBox(
                           height: 50,
                           width: width * .30,
-                          child: RaisedButton(
-                            color: secondaryColor,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: secondaryColor,
+                            ),
                             onPressed: () {
                               Navigator.of(context)
                                   .pushReplacementNamed(Routes.modeSelection);
@@ -298,8 +302,10 @@ class _GeoInspectionStationCheckListState
                         SizedBox(
                           height: 50,
                           width: width * .30,
-                          child: RaisedButton(
-                            color: secondaryColor,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: secondaryColor,
+                            ),
                             onPressed: () {
                               Navigator.of(context).pushReplacementNamed(
                                   Routes.tubeSelectionScreen);
@@ -544,8 +550,10 @@ class _GeoInspectionStationCheckListState
                     SizedBox(
                       height: 50,
                       width: width * 0.45,
-                      child: RaisedButton(
-                        color: secondaryColor,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: secondaryColor,
+                        ),
                         onPressed: () {
                           showDialog(
                             context: context,
@@ -573,7 +581,10 @@ class _GeoInspectionStationCheckListState
                                   ),
                                 ),
                                 actions: [
-                                  RaisedButton(
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.green,
+                                    ),
                                     onPressed: () async {
                                       await api.postScarp(
                                           widget.pref,
@@ -597,14 +608,15 @@ class _GeoInspectionStationCheckListState
                                           .pushReplacementNamed(
                                               Routes.tubeSelectionScreen);
                                     },
-                                    color: Colors.green,
                                     child: Text('Yes'),
                                   ),
-                                  RaisedButton(
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.red,
+                                    ),
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    color: Colors.red,
                                     child: Text('No'),
                                   )
                                 ],
@@ -834,8 +846,10 @@ class _GeoInspectionStationCheckListState
                     SizedBox(
                       height: 50,
                       width: width * 0.90,
-                      child: RaisedButton(
-                        color: primaryColor,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: primaryColor,
+                        ),
                         onPressed: () async {
                           await validateLength();
                           await validateOD();

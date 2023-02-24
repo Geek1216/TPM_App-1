@@ -93,8 +93,10 @@ class _TubeMillLogsState extends State<TubeMillLogs> {
                                   Container(
                                     height: 50,
                                     width: width * 0.95,
-                                    child: RaisedButton(
-                                      color: primaryColor,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: primaryColor,
+                                      ),
                                       onPressed: () {
                                         setState(() {
                                           isStarted = true;
@@ -225,8 +227,10 @@ class _TubeMillLogsState extends State<TubeMillLogs> {
                                           Container(
                                             height: 50,
                                             width: width * 0.9,
-                                            child: RaisedButton(
-                                              color: primaryColor,
+                                            child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                primary: primaryColor,
+                                              ),
                                               onPressed: () {
                                                 setState(() {
                                                   isStarted = false;
@@ -566,8 +570,10 @@ class _TubeMillLogsState extends State<TubeMillLogs> {
                                                         Container(
                                                           height: 50,
                                                           width: width * 0.9,
-                                                          child: RaisedButton(
-                                                            color: primaryColor,
+                                                          child: ElevatedButton(
+                                                            style: ElevatedButton.styleFrom(
+                                                              primary: primaryColor,
+                                                            ),
                                                             onPressed: () {},
                                                             child: const Text(
                                                                 'Save',
@@ -670,8 +676,10 @@ class _TubeMillLogsState extends State<TubeMillLogs> {
                                                     Container(
                                                       height: 50,
                                                       width: width * 0.9,
-                                                      child: RaisedButton(
-                                                        color: primaryColor,
+                                                      child: ElevatedButton(
+                                                        style: ElevatedButton.styleFrom(
+                                                          primary: primaryColor,
+                                                        ),
                                                         onPressed: () {},
                                                         child: const Text(
                                                             'Save',
@@ -761,8 +769,10 @@ class _TubeMillLogsState extends State<TubeMillLogs> {
                                               Container(
                                                 height: 50,
                                                 width: width * 0.9,
-                                                child: RaisedButton(
-                                                  color: primaryColor,
+                                                child: ElevatedButton(
+                                                  style: ElevatedButton.styleFrom(
+                                                    primary: primaryColor,
+                                                  ),
                                                   onPressed: () {},
                                                   child: const Text('Save',
                                                       style: TextStyle(
