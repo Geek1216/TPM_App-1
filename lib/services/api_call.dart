@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:flutter/material.dart';
@@ -93,12 +94,13 @@ class APICall {
 
   //get details for mill user job
   getJobDetails(PreferencesService pref) async {
+    log("gbhfb");
     try {
       String device_id = await PlatformDeviceId.getDeviceId;
       if (pref.token == "") await getJSONToken(pref, "");
 
       String path = "TPM_Forms_Test/API/jobReturn.php?userToken=${pref.token}&mac_add=$device_id";
-      print(Uri.parse(baseURL + path));
+      log(Uri.parse(baseURL + path).toString());
 
       Response response = await client.get(Uri.parse(baseURL + path), headers: {
         "Accept": "application/json",

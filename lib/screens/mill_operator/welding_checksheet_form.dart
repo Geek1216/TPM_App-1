@@ -438,7 +438,7 @@ class _WeldingCheckSheetFormState extends State<WeldingCheckSheetForm> {
 
     if (nextTube.contains("-")) {
       int temp = int.parse(quantity) - int.parse(nextTube.split("-").last);
-      tubesRemaining = (temp - 1).toString();
+      tubesRemaining = (temp + 1).toString();
     } else {
       tubesRemaining = tubesMill;
     }
